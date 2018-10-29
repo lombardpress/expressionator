@@ -1,3 +1,7 @@
+html {
+  margin: 0;
+  padding: 0;
+}
 body {
   margin: 0;
   padding: 0;
@@ -11,4 +15,36 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+
+.App-header{
+  width: 100%;
+  padding: 10px;
+  background-color: gray;
+}
+.navbar{
+  width: 100%;
+  padding: 10px;
+  background-color: #59ac7a;
+}
+.data-creation-form{
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+}
+.data-viewer{
+  border-top: 1px solid black;
+  display: flex;
+  flex: justify-content;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+}
+.data-viewer div {
+  width: 30%;
+  margin: auto
+}
+label, input{
+  display: block;
 }
