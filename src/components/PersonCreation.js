@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { actions } from '../store';
 
 class PersonCreation extends Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class PersonCreation extends Component {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    this.props.handlePersonUpdate({"title": title, "description": description});
+    this.props.updatePerson(title, description);
   }
   render() {
     return (
@@ -32,4 +34,31 @@ class PersonCreation extends Component {
   }
 }
 
-  export default PersonCreation;
+/**
+ * mapStateToProps - to hook up connect
+ * @memberof PersonCreation
+ * @private
+ */
+const mapStateToProps = state => (
+  {
+    edfInfo: state.edfInfo,
+    personsInfo: state.personsInfo,
+    personInfo: state.personInfo,
+    view: state.view
+  }
+);
+
+/**
+ * mapDispatchToProps - used to hook up connect to action creators
+ * @memberof PersonCreation
+ * @private
+ */
+const mapDispatchToProps = dispatch => ({
+   updatePerson: (name, description) => (
+     dispatch(actions.updatePerson(name, description))
+   )
+});
+export default connect(
+mapStateToProps,
+mapDispatchToProps,
+)(PersonCreation);
