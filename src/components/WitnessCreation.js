@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
-class PersonCreation extends Component {
+class WitnessCreation extends Component {
   constructor(props) {
     super(props);
     this.handlePersonUpdate = this.handlePersonUpdate.bind(this);
@@ -17,17 +17,17 @@ class PersonCreation extends Component {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    this.props.updatePerson(title, description);
+    this.props.updateWitness(title, description);
   }
   render() {
     return (
       <div className="data-creation-form">
-        <h3>Person Info</h3>
+        <h3>Witness Info</h3>
         <form ref="form" onSubmit={this.handlePersonUpdate}>
           <label>Title</label>
-          <input type="text" name="title" placeholder={this.props.personInfo.title}></input>
+          <input type="text" name="title" placeholder="title"></input>
           <label>Description</label>
-          <input type="text" name="description" placeholder={this.props.personInfo.description}></input>
+          <input type="text" name="description" placeholder="description"></input>
           <input type="submit"></input>
         </form>
       </div>
@@ -37,7 +37,7 @@ class PersonCreation extends Component {
 
 /**
  * mapStateToProps - to hook up connect
- * @memberof PersonCreation
+ * @memberof WitnessCreation
  * @private
  */
 const mapStateToProps = state => (
@@ -51,15 +51,15 @@ const mapStateToProps = state => (
 
 /**
  * mapDispatchToProps - used to hook up connect to action creators
- * @memberof PersonCreation
+ * @memberof WitnessCreation
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-   updatePerson: (name, description) => (
-     dispatch(actions.updatePerson(name, description))
-   )
+  updateWitness: (name, description) => (
+    dispatch(actions.updateWitness(name, description))
+  )
 });
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(PersonCreation);
+)(WitnessCreation);

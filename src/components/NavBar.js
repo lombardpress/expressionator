@@ -7,6 +7,7 @@ class NavBar extends Component {
     super(props);
     this.switchToPersonCreationView = this.switchToPersonCreationView.bind(this);
     this.switchToEdfCreationView = this.switchToEdfCreationView.bind(this);
+    this.switchToWitnessCreationView = this.switchToWitnessCreationView.bind(this);
   }
   switchToPersonCreationView(){
     this.props.changeDataCreationView("personCreation")
@@ -14,12 +15,16 @@ class NavBar extends Component {
   switchToEdfCreationView(){
     this.props.changeDataCreationView("edfCreation")
   }
+  switchToWitnessCreationView(){
+    this.props.changeDataCreationView("witnessCreation")
+  }
   render() {
     return (
       <div className="navbar">
         Manage:
         <button onClick={this.switchToPersonCreationView}>Person Info</button> |
-        <button onClick={this.switchToEdfCreationView}>Text Info</button>
+        <button onClick={this.switchToEdfCreationView}>Text Info</button> | 
+        <button onClick={this.switchToWitnessCreationView}>Witness Info</button>
       </div>
     );
   }

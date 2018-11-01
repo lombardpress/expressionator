@@ -34,7 +34,6 @@ export function fetchPersons() {
       "ORDER BY ?authorTitle"].join('');
   return ((dispatch) => {
     dispatch(requestPersons());
-    const _this = this;
     Axios.get(sparqlEndpoint, {params: {"query" : query, "output": "json"}}).then(function(res){
       dispatch(receivePersons(res.data.results.bindings))
     })
@@ -42,6 +41,47 @@ export function fetchPersons() {
     );
   });
 }
+
+// fetch witnesses
+
+export function requestWitnesses() {
+  return {
+    type: ActionTypes.REQUEST_WITNESSES,
+  };
+}
+export function receiveWitnesses(witnessesList) {
+  return {
+    type: ActionTypes.RECEIVE_WITNESSES,
+    witnessesList
+  };
+}
+export function receiveWitnessesFailure(error) {
+  return {
+    type: ActionTypes.RECEIVE_WITNESSES_FAILURE,
+    error
+  };
+}
+export function fetchWitnesses() {
+  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const query = [
+      "SELECT DISTINCT ?witness ?witnessTitle ?witnessShortId ",
+      "WHERE { ",
+      "?witness a <http://scta.info/resource/codex> .",
+      // "?witness <http://scta.info/property/shortId> ?witnessShortId .",
+      "?witness <http://purl.org/dc/elements/1.1/title> ?witnessTitle .",
+      "}",
+      "ORDER BY ?witnessTitle"].join('');
+  return ((dispatch) => {
+    dispatch(requestWitnesses());
+    Axios.get(sparqlEndpoint, {params: {"query" : query, "output": "json"}}).then(function(res){
+      console.log("res", res)
+      dispatch(receiveWitnesses(res.data.results.bindings))
+    })
+    .catch(error => dispatch(receiveWitnessesFailure(error))
+    );
+  });
+}
+
 
 export function changeDataCreationView(dataCreationView){
   if (!dataCreationView){
@@ -57,6 +97,14 @@ export function changeDataCreationView(dataCreationView){
 export function updatePerson(title, description){
   return{
     type: ActionTypes.UPDATE_PERSON,
+    title,
+    description
+  }
+}
+
+export function updateWitness(title, description){
+  return{
+    type: ActionTypes.UPDATE_WITNESS,
     title,
     description
   }

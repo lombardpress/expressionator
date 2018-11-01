@@ -4,7 +4,10 @@ import logo from './logo.svg';
 import EdfCreation from './EdfCreation.js';
 import DataViewer from './DataViewer.js';
 import PersonCreation from './PersonCreation.js';
+import WitnessCreation from './WitnessCreation.js';
 import NavBar from './NavBar.js';
+import PersonsListViewer from './PersonsListViewer.js';
+import WitnessesListViewer from './WitnessesListViewer.js';
 import Axios from 'axios'
 import { actions } from '../store';
 
@@ -17,6 +20,21 @@ class App extends Component {
 
   }
   render() {
+
+    const creationView = (view) => {
+      if (view === "edfCreation"){
+        return <EdfCreation />
+      }
+      else if(view === "personCreation"){
+        return <PersonCreation />
+      }
+      else if (view === "witnessCreation"){
+        return   <WitnessCreation />
+      }
+      else{
+        return <EdfCreation />
+      }
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -25,10 +43,20 @@ class App extends Component {
           </p>
         </header>
         <NavBar/>
-        {this.props.view.dataCreationView === "edfCreation" ?
-        <EdfCreation /> :
-        <PersonCreation />}
-        <DataViewer/>
+        <div className="body-wrapper">
+          <div className="data-lists">
+            <PersonsListViewer/>
+            <WitnessesListViewer/>
+          </div>
+          <div className="creation-view">
+            <div>
+              {creationView(this.props.view.dataCreationView)}
+            </div>
+            <div>
+              <DataViewer/>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

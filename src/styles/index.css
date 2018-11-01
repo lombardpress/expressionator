@@ -29,7 +29,7 @@ code {
   background-color: #59ac7a;
 }
 .data-creation-form{
-  width: 50%;
+  width: 100%;
   margin: auto;
   padding: 20px;
 }
@@ -42,9 +42,27 @@ code {
   padding: 20px;
 }
 .data-viewer div {
-  width: 30%;
+  width: 100%;
   margin: auto
 }
 label, input{
   display: block;
+}
+
+.body-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  vertical-align: top;
+}
+.data-lists{
+  display: flex;
+  justify-content: flex-start;
+  width: 30%;
+  overflow: auto;
+
+
+}
+.creation-view{
+  
 }

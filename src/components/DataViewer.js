@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
+import WitnessView from './WitnessView.js';
 
 class DataViewer extends Component {
   constructor(props) {
@@ -24,6 +25,10 @@ class DataViewer extends Component {
           <h3>Person Info</h3>
           <p>Author {this.props.personInfo.title}</p>
           <p>Description {this.props.personInfo.description}</p>
+        </div>
+        <div>
+          <h3>Witness Info</h3>
+          <WitnessView/>
         </div>
     </div>
     );

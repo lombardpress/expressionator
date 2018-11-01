@@ -8,6 +8,7 @@ import { store, actions} from './store';
 
 //get author list
 store.dispatch(actions.fetchPersons());
+store.dispatch(actions.fetchWitnesses());
 
 store.subscribe(() => {
   localStorage.setItem("data-creation-state", JSON.stringify(store.getState()))
