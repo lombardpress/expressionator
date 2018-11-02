@@ -18,17 +18,7 @@ class EdfCreation extends Component {
     this.props.updateEdf({"title": title, "description": description});
   }
   render() {
-    function displayAuthors(props){
-
-      const displayAuthors = props.personsInfo.map((author) =>{
-          return(
-            <option value={author.authorShortId.value} key={author.authorShortId.value}>{author.authorTitle.value}</option>
-          )
-      });
-      // add newly created person record to list of names
-      displayAuthors.push(<option value={props.personInfo.title} key="new">{props.personInfo.title}</option>)
-      return displayAuthors
-    }
+    
     return (
       <div className="data-creation-form">
         <h3>Text Info</h3>

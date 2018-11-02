@@ -25,9 +25,9 @@ class WitnessCreation extends Component {
         <h3>Witness Info</h3>
         <form ref="form" onSubmit={this.handlePersonUpdate}>
           <label>Title</label>
-          <input type="text" name="title" placeholder="title"></input>
+          <input type="text" name="title" placeholder={this.props.witnessInfo.title}></input>
           <label>Description</label>
-          <input type="text" name="description" placeholder="description"></input>
+          <input type="text" name="description" placeholder={this.props.witnessInfo.description}></input>
           <input type="submit"></input>
         </form>
       </div>
@@ -45,6 +45,8 @@ const mapStateToProps = state => (
     edfInfo: state.edfInfo,
     personsInfo: state.personsInfo,
     personInfo: state.personInfo,
+    witnessInfo: state.witnessInfo,
+    witnessesInfo: state.witnessesInfo,
     view: state.view
   }
 );
