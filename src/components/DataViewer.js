@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
-import WitnessView from './WitnessView.js';
+import WitnessesView from './WitnessesView.js';
 
 class DataViewer extends Component {
   constructor(props) {
@@ -28,9 +28,9 @@ class DataViewer extends Component {
         </div>
         <div>
           <h3>Witness Info</h3>
-          <WitnessView/>
+          <WitnessesView />
         </div>
-    </div>
+      </div>
     );
   }
 }
@@ -55,9 +55,9 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-//   fetchManifest: manifestUrl => (
-//     dispatch(actions.fetchManifest(manifestUrl))
-//   ),
+  //   fetchManifest: manifestUrl => (
+  //     dispatch(actions.fetchManifest(manifestUrl))
+  //   ),
 });
 export default connect(
   mapStateToProps,

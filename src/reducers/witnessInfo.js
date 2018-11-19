@@ -1,16 +1,21 @@
-import ActionTypes from '../actions/action-types';
+import ActionTypes from "../actions/action-types";
+import { makeid } from "../utils";
 
 /**
  * manifestsReducer
  */
-const witnessReducer = (state = {}, action) => {
+const witnessReducer = (state = [], action) => {
   switch (action.type) {
     case ActionTypes.UPDATE_WITNESS:
-      return {
+      const currentWitnesses = state.slice();
+      currentWitnesses.push({
+        id: "cod-" + makeid(),
         title: action.title,
         description: action.description
-      }
-    default: return state
+      });
+      return currentWitnesses;
+    default:
+      return state;
   }
 };
 

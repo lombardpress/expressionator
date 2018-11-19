@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actions } from '../store';
+import WitnessView from './WitnessView';
 
 
-class WitnessView extends Component {
+class WitnessesView extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-
-  }
 
   render() {
+    console.log("Inside render: ", this.props.witnessInfo)
+    const displayWitnesses = (witnesses) => {
+      const witnessArray = witnesses.map(item => {
+        console.log(item)
+        return (
+          <WitnessView title={item.title} description={item.description} />
+        )
+      })
+      return witnessArray
+    }
     return (
-      <div className="data-creation-form">
-        <p>{this.props.title}</p>
-        <p>{this.props.description}</p>
+      <div>
+        {displayWitnesses(this.props.witnessInfo)}
       </div>
     )
   }
@@ -48,4 +54,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(WitnessView);
+)(WitnessesView);

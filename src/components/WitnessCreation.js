@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { actions } from '../store';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { actions } from "../store";
 
 class WitnessCreation extends Component {
   constructor(props) {
     super(props);
-    this.handlePersonUpdate = this.handlePersonUpdate.bind(this);
-    this.state = {
-
-    }
+    this.handleWitnessUpdate = this.handleWitnessUpdate.bind(this);
+    this.state = {};
   }
-  componentDidMount(){
-
-  }
-  handlePersonUpdate(e){
+  componentDidMount() { }
+  handleWitnessUpdate(e) {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
@@ -23,15 +19,23 @@ class WitnessCreation extends Component {
     return (
       <div className="data-creation-form">
         <h3>Witness Info</h3>
-        <form ref="form" onSubmit={this.handlePersonUpdate}>
+        <form ref="form" onSubmit={this.handleWitnessUpdate}>
           <label>Title</label>
-          <input type="text" name="title" placeholder={this.props.witnessInfo.title}></input>
+          <input
+            type="text"
+            name="title"
+            placeholder={this.props.witnessInfo.title}
+          />
           <label>Description</label>
-          <input type="text" name="description" placeholder={this.props.witnessInfo.description}></input>
-          <input type="submit"></input>
+          <input
+            type="text"
+            name="description"
+            placeholder={this.props.witnessInfo.description}
+          />
+          <input type="submit" />
         </form>
       </div>
-    )
+    );
   }
 }
 
@@ -40,16 +44,14 @@ class WitnessCreation extends Component {
  * @memberof WitnessCreation
  * @private
  */
-const mapStateToProps = state => (
-  {
-    edfInfo: state.edfInfo,
-    personsInfo: state.personsInfo,
-    personInfo: state.personInfo,
-    witnessInfo: state.witnessInfo,
-    witnessesInfo: state.witnessesInfo,
-    view: state.view
-  }
-);
+const mapStateToProps = state => ({
+  edfInfo: state.edfInfo,
+  personsInfo: state.personsInfo,
+  personInfo: state.personInfo,
+  witnessInfo: state.witnessInfo,
+  witnessesInfo: state.witnessesInfo,
+  view: state.view
+});
 
 /**
  * mapDispatchToProps - used to hook up connect to action creators
@@ -57,11 +59,10 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  updateWitness: (name, description) => (
+  updateWitness: (name, description) =>
     dispatch(actions.updateWitness(name, description))
-  )
 });
 export default connect(
-mapStateToProps,
-mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps
 )(WitnessCreation);
