@@ -7,8 +7,8 @@ class WitnessesListItem extends Component {
     super(props);
     this.handleWitnessSelect = this.handleWitnessSelect.bind(this);
   }
-  handleWitnessSelect(){
-    this.props.updateWitness(this.props.witnessTitle, "description")
+  handleWitnessSelect() {
+    this.props.attachWitness(this.props.witnessTitle, "description")
   }
   render() {
     return (
@@ -40,8 +40,8 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  updateWitness: (name, description) => (
-    dispatch(actions.updateWitness(name, description))
+  attachWitness: (name, description) => (
+    dispatch(actions.attachWitness(name, description))
   )
 });
 export default connect(

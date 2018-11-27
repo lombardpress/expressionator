@@ -13,7 +13,7 @@ class WitnessView extends Component {
 
   render() {
     return (
-      <div className="data-creation-form">
+      <div className="data-creation-form" onClick={() => this.props.changeFocusedWitness(this.props.id)}>
         <p>{this.props.title}</p>
         <p>{this.props.description}</p>
       </div>
@@ -43,7 +43,9 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-
+  changeFocusedWitness: (id) => (
+    dispatch(actions.changeFocusedWitness(id))
+  )
 });
 export default connect(
   mapStateToProps,
