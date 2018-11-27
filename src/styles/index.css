@@ -2,6 +2,7 @@ html {
   margin: 0;
   padding: 0;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -18,22 +19,25 @@ code {
 }
 
 
-.App-header{
+.App-header {
   width: 100%;
   padding: 10px;
   background-color: gray;
 }
-.navbar{
+
+.navbar {
   width: 100%;
   padding: 10px;
   background-color: #59ac7a;
 }
-.data-creation-form{
+
+.data-creation-form {
   width: 100%;
   margin: auto;
   padding: 20px;
 }
-.data-viewer{
+
+.data-viewer {
   border-top: 1px solid black;
   display: flex;
   flex: justify-content;
@@ -41,28 +45,35 @@ code {
   margin: auto;
   padding: 20px;
 }
+
 .data-viewer div {
   width: 100%;
   margin: auto
 }
-label, input{
+
+label,
+input {
   display: block;
 }
 
-.body-wrapper{
+.body-wrapper {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   vertical-align: top;
 }
-.data-lists{
+
+.data-lists {
   display: flex;
   justify-content: flex-start;
   width: 30%;
   overflow: auto;
-
-
 }
-.creation-view{
-  
+
+.creation-view div {
+  width: 100%;
+}
+
+.data-view div {
+  width: 100%;
 }

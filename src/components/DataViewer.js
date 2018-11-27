@@ -4,17 +4,10 @@ import { actions } from '../store';
 import WitnessesView from './WitnessesView.js';
 
 class DataViewer extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
-
-
-
-
-
     return (
-      <div className="data-viewer">
+      <div className="data-view">
         <div>
           <h3>Text Info</h3>
           <p>Title {this.props.edfInfo.title}</p>
