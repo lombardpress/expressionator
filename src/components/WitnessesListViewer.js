@@ -11,11 +11,12 @@ class WitnessesListViewer extends Component {
     function displayWitnesses(props){
 
       const displayWitnesses = props.witnessesInfo.map((witness) =>{
+        
         //temporary shortId get because codices are currently not listing shortId in SCTA rdf graph
-        const splitArray = witness.witness.value.split("/resource/")
-        const id = splitArray[splitArray.length - 1]
+        //const splitArray = witness.witness.value.split("/resource/")
+        //const id = splitArray[splitArray.length - 1]
           return(
-            <WitnessesListItem key={id} witnessId={id} witnessTitle={witness.witnessTitle.value}/>
+            <WitnessesListItem key={witness.id} witnessId={witness.id} witnessTitle={witness.title} witnessStatus={witness.status} proposedChange={witness.proposedChange}/>
           )
       });
       return displayWitnesses

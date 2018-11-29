@@ -1,5 +1,6 @@
 import Axios from "axios"
 import ActionTypes from './action-types';
+import { makeid } from "../utils";
 
 
 export function requestPersons() {
@@ -101,13 +102,31 @@ export function updatePerson(title, description) {
     description
   }
 }
+export function createAndAttachWitness(title, description){
+  const id =  "cod-" + makeid();
+  return((dispatch) => {
+    dispatch(createWitness(id, title, description))
+    dispatch(attachWitness(id, title, description))
+  });
+}
 
-export function attachWitness(title, description) {
+export function createWitness(id, title, description) {
+
+  return {
+    type: ActionTypes.CREATE_WITNESS,
+    title,
+    description,
+    id
+  }
+}
+
+export function attachWitness(id, title, description) {
   // Assigns witness to an EDF
   return {
     type: ActionTypes.ATTACH_WITNESS,
     title,
-    description
+    description,
+    id
   }
 }
 
@@ -121,6 +140,7 @@ export function updateWitness(id, title, description) {
 }
 
 export function changeFocusedWitness(id) {
+  console.log("test");
   return {
     type: ActionTypes.CHANGE_FOCUSED_WITNESS,
     id: id

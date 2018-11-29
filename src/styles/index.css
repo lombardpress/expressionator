@@ -77,3 +77,8 @@ input {
 .data-view div {
   width: 100%;
 }
+.provisional{
+  color: green;
+  padding-left: 10px;
+  font-size: 12px;
+}

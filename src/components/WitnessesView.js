@@ -12,7 +12,6 @@ class WitnessesView extends Component {
     console.log("Inside render: ", this.props.witnessInfo)
     const displayWitnesses = (witnesses) => {
       const witnessArray = witnesses.map(item => {
-        console.log(item)
         return (
           <WitnessView title={item.title} description={item.description} id={item.id} key={item.id} />
         )

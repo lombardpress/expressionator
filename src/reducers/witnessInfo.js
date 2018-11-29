@@ -8,12 +8,15 @@ const witnessReducer = (state = [], action) => {
   switch (action.type) {
     case ActionTypes.ATTACH_WITNESS:
       const currentWitnesses = state.slice();
-      currentWitnesses.push({
-        id: "cod-" + makeid(),
-        title: action.title,
-        description: action.description
-      });
-      return currentWitnesses;
+
+      if (!currentWitnesses.find(wit => wit.id === action.id)){
+        currentWitnesses.push({
+          id: action.id,
+          title: action.title,
+          description: action.description
+        });
+        return currentWitnesses;
+      }
     case ActionTypes.UPDATE_WITNESS:
       return (
         state.map(witness => {

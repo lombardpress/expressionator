@@ -8,11 +8,26 @@ class WitnessesListItem extends Component {
     this.handleWitnessSelect = this.handleWitnessSelect.bind(this);
   }
   handleWitnessSelect() {
-    this.props.attachWitness(this.props.witnessTitle, "description")
+    this.props.attachWitness(this.props.witnessId, this.props.witnessTitle, "description")
   }
   render() {
+    const displayProposedChange = (witness) => {
+      if (witness.proposedChange){
+        console.log("condition passed")
+        return(
+          <div className="provisional">Proposed Change:
+            <p>title {this.props.proposedChange.title}</p>
+            <p>description {this.props.proposedChange.description} </p>
+            </div>
+        )
+      }
+
+    }
     return (
-      <p onClick={this.handleWitnessSelect} ref="item" value={this.props.witnessId} name={this.props.witnessTitle} key={this.props.witnessId}>{this.props.witnessTitle}</p>
+      <div>
+      <p className={this.props.witnessStatus} onClick={this.handleWitnessSelect} ref="item" value={this.props.witnessId} name={this.props.witnessTitle} key={this.props.witnessId}>{this.props.witnessTitle}</p>
+      {displayProposedChange(this.props)}
+      </div>
 
     );
   }

@@ -13,9 +13,9 @@ class WitnessView extends Component {
 
   render() {
     return (
-      <div className="data-creation-form" onClick={() => this.props.changeFocusedWitness(this.props.id)}>
+      <div onClick={() => this.props.changeFocusedWitness(this.props.id)}>
         <p>{this.props.title}</p>
-        <p>{this.props.description}</p>
+        <p>Description: {this.props.description}</p>
       </div>
     )
   }
