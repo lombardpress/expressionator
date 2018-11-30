@@ -6,20 +6,34 @@ import PersonsListItem from './PersonsListItem.js';
 class PersonsListViewer extends Component {
   constructor(props) {
     super(props);
+    this.handleOnChangeSearchText = this.handleOnChangeSearchText.bind(this);
+    this.state = {
+      searchText: ""
+    }
+  }
+  handleOnChangeSearchText(e){
+    e.preventDefault();
+    const searchText = e.target.value
+    this.setState(() => ({searchText: searchText}))
   }
   render() {
-    function displayAuthors(props){
-
+    function displayAuthors(props, searchText){
       const displayAuthors = props.personsInfo.map((author) =>{
+        if (!searchText || author.authorTitle.value.includes(searchText)){
           return(
             <PersonsListItem key={author.authorShortId.value} personId={author.authorShortId.value} personTitle={author.authorTitle.value}/>
           )
+        }
       });
       return displayAuthors
     }
     return (
       <div className="personsList">
-        {displayAuthors(this.props)}
+        <form onChange={this.handleOnChangeSearchText}>
+          <p>Filter Names</p>
+          <input type="text" />
+        </form>
+        {displayAuthors(this.props, this.state.searchText)}
       </div>
     );
   }
