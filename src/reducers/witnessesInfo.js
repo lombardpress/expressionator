@@ -20,7 +20,6 @@ const witnessesReducer = (state = {}, action) => {
           status: "SCTA"
         }
       });
-      console.log("new array", newArray)
       return newArray
     case ActionTypes.RECEIVE_WITNESSES_FAILURE:
     case ActionTypes.CREATE_WITNESS:

@@ -66,12 +66,18 @@ input {
 .data-lists {
   display: flex;
   justify-content: flex-start;
-  width: 30%;
+  width: 40%;
   overflow: auto;
 }
+.data-lists div {
+  margin-right: 10px;
+}
 
+.creation-view {
+  width: 60%;
+}
 .creation-view div {
-  width: 100%;
+  width: 100%%;
 }
 
 .data-view div {

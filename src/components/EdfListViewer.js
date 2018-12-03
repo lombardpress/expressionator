@@ -20,11 +20,11 @@ class EdfListViewer extends Component {
     function displayEdfs(props, searchText) {
       const displayEdfs = props.edfListInfo.map((edf) => {
         if (!searchText
-          || edf.expressionTitle.value.toLowerCase().includes(searchText.toLowerCase())
-          || edf.authorTitle.value.toLowerCase().includes(searchText.toLowerCase())
+          || edf.title.toLowerCase().includes(searchText.toLowerCase())
+          || edf.authorTitle.toLowerCase().includes(searchText.toLowerCase())
         ) {
           return (
-            <EdfListItem key={edf.expressionShortId.value} authorTitle={edf.authorTitle.value} edfId={edf.expressionShortId.value} edfTitle={edf.expressionTitle.value} />
+            <EdfListItem key={edf.id} authorTitle={edf.authorTitle} edfId={edf.id} edfTitle={edf.title} edfStatus={edf.status} proposedChange={edf.proposedChange} />
           )
         }
       });

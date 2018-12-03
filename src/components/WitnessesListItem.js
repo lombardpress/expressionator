@@ -13,7 +13,6 @@ class WitnessesListItem extends Component {
   render() {
     const displayProposedChange = (witness) => {
       if (witness.proposedChange){
-        console.log("condition passed")
         return(
           <div className="provisional">Proposed Change:
             <p>title {this.props.proposedChange.title}</p>

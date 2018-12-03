@@ -9,17 +9,33 @@ class EdfListItem extends Component {
   }
   handleEdfSelect() {
     const info = {
+      id: this.props.edfId,
       title: this.props.edfTitle,
       description: 'description'
     }
     this.props.assignEdf(info)
-    this.props.updatePerson(this.props.authorTitle, 'description')
+
+    this.props.assignPerson(this.props.authorTitle, 'description')
   }
   render() {
+    const displayProposedChange = (edf) => {
+      if (edf.proposedChange){
+        return(
+          <div className="provisional">Proposed Change:
+            <p>title {this.props.proposedChange.title}</p>
+            <p>description {this.props.proposedChange.description} </p>
+            </div>
+        )
+      }
+
+    }
     return (
-      <p onClick={this.handleEdfSelect} ref="item" value={this.props.edfId} name={this.props.edfTitle} key={this.props.edfId}>
+      <div>
+      <p className={this.props.edfStatus} onClick={this.handleEdfSelect} ref="item" value={this.props.edfId} name={this.props.edfTitle} key={this.props.edfId}>
         {this.props.authorTitle + ' – ' + this.props.edfTitle}
       </p>
+      {displayProposedChange(this.props)}
+      </div>
     );
   }
 }
@@ -44,8 +60,8 @@ const mapDispatchToProps = dispatch => ({
   assignEdf: (info) => (
     dispatch(actions.assignEdf(info))
   ),
-  updatePerson: (title, description) => (
-    dispatch(actions.updatePerson(title, description))
+  assignPerson: (title, description) => (
+    dispatch(actions.assignPerson(title, description))
   )
 });
 export default connect(

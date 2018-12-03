@@ -17,7 +17,7 @@ class PersonCreation extends Component {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    this.props.updatePerson(title, description);
+    this.props.assignPerson(title, description);
   }
   render() {
     return (
@@ -55,8 +55,8 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-   updatePerson: (name, description) => (
-     dispatch(actions.updatePerson(name, description))
+   assignPerson: (name, description) => (
+     dispatch(actions.assignPerson(name, description))
    )
 });
 export default connect(

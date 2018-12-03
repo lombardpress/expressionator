@@ -75,7 +75,6 @@ export function fetchWitnesses() {
   return ((dispatch) => {
     dispatch(requestWitnesses());
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
-      console.log("res", res)
       dispatch(receiveWitnesses(res.data.results.bindings))
     })
       .catch(error => dispatch(receiveWitnessesFailure(error))
@@ -136,9 +135,9 @@ export function changeDataCreationView(dataCreationView) {
   }
 }
 
-export function updatePerson(title, description) {
+export function assignPerson(title, description) {
   return {
-    type: ActionTypes.UPDATE_PERSON,
+    type: ActionTypes.ASSIGN_PERSON,
     title,
     description
   }
@@ -181,18 +180,50 @@ export function updateWitness(id, title, description) {
 }
 
 export function changeFocusedWitness(id) {
-  console.log("test");
   return {
     type: ActionTypes.CHANGE_FOCUSED_WITNESS,
     id: id
   }
 }
 
+
+export function createAndAssignEdf(info) {
+  const id = makeid();
+  info.id = id;
+  return ((dispatch) => {
+    dispatch(createEdf(info))
+    dispatch(assignEdf(info))
+  });
+}
 export function assignEdf(info) {
   return {
     type: ActionTypes.ASSIGN_EDF,
+    id: info.id,
     title: info.title,
-    author: info.author,
+    authorTitle: info.authorTitle,
     description: info.description
+  }
+}
+export function createEdf(info) {
+  return {
+    type: ActionTypes.CREATE_EDF,
+    id: info.id,
+    title: info.title,
+    authorTitle: info.authorTitle,
+    description: info.description
+  }
+}
+export function updateEdf(info) {
+  return {
+    type: ActionTypes.UPDATE_EDF,
+    id: info.id,
+    title: info.title,
+    authorTitle: info.authorTitle,
+    description: info.description
+  }
+}
+export function clearEdfInfo(info) {
+  return {
+    type: ActionTypes.CLEAR_EDF_INFO,
   }
 }

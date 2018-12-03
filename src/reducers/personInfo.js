@@ -5,7 +5,7 @@ import ActionTypes from '../actions/action-types';
  */
 const personReducer = (state = {}, action) => {
   switch (action.type) {
-    case ActionTypes.UPDATE_PERSON:
+    case ActionTypes.ASSIGN_PERSON:
       return {
         title: action.title,
         description: action.description

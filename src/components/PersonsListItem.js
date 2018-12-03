@@ -8,7 +8,7 @@ class PersonsListItem extends Component {
     this.handlePersonSelect = this.handlePersonSelect.bind(this);
   }
   handlePersonSelect(){
-    this.props.updatePerson(this.props.personTitle, "description")
+    this.props.assignPerson(this.props.personTitle, "description")
   }
   render() {
     return (
@@ -37,8 +37,8 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  updatePerson: (name, description) => (
-    dispatch(actions.updatePerson(name, description))
+  assignPerson: (name, description) => (
+    dispatch(actions.assignPerson(name, description))
   )
 });
 export default connect(
