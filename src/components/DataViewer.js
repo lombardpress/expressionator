@@ -11,7 +11,6 @@ class DataViewer extends Component {
         <div>
           <h3>Text Info</h3>
           <p>Title {this.props.edfInfo.title}</p>
-          <p>Author {this.props.edfInfo.author}</p>
           <p>Description {this.props.edfInfo.description}</p>
         </div>
         <div>

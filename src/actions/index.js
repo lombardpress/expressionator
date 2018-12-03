@@ -83,6 +83,47 @@ export function fetchWitnesses() {
   });
 }
 
+// EDF actions
+export function requestEdfList() {
+  return {
+    type: ActionTypes.REQUEST_EDFS,
+  };
+}
+export function receiveEdfList(edfList) {
+  return {
+    type: ActionTypes.RECEIVE_EDFS,
+    edfList
+  };
+}
+export function receiveEdfListFailure(error) {
+  return {
+    type: ActionTypes.RECEIVE_EDFS_FAILURE,
+    error
+  };
+}
+export function fetchEdfList() {
+  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const query = [
+    "SELECT DISTINCT ?expression ?expressionTitle ?authorTitle ?expressionShortId ",
+    "WHERE { ",
+    "?expression a <http://scta.info/resource/expression> .",
+    "?expression <http://scta.info/property/level> '1' .",
+    "?expression <http://scta.info/property/shortId> ?expressionShortId .",
+    "?expression <http://www.loc.gov/loc.terms/relators/AUT> ?author .",
+    "?author <http://purl.org/dc/elements/1.1/title> ?authorTitle .",
+    "?expression <http://purl.org/dc/elements/1.1/title> ?expressionTitle .",
+    "}",
+    "ORDER BY ?expressionTitle"].join('');
+  return ((dispatch) => {
+    dispatch(requestEdfList());
+    Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
+      dispatch(receiveEdfList(res.data.results.bindings))
+    })
+      .catch(error => dispatch(receiveEdfListFailure(error))
+      );
+  });
+}
+
 
 export function changeDataCreationView(dataCreationView) {
   if (!dataCreationView) {
@@ -102,9 +143,9 @@ export function updatePerson(title, description) {
     description
   }
 }
-export function createAndAttachWitness(title, description){
-  const id =  "cod-" + makeid();
-  return((dispatch) => {
+export function createAndAttachWitness(title, description) {
+  const id = "cod-" + makeid();
+  return ((dispatch) => {
     dispatch(createWitness(id, title, description))
     dispatch(attachWitness(id, title, description))
   });
@@ -147,9 +188,9 @@ export function changeFocusedWitness(id) {
   }
 }
 
-export function updateEdf(info) {
+export function assignEdf(info) {
   return {
-    type: ActionTypes.UPDATE_EDF,
+    type: ActionTypes.ASSIGN_EDF,
     title: info.title,
     author: info.author,
     description: info.description

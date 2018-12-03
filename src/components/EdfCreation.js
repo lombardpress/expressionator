@@ -8,17 +8,17 @@ class EdfCreation extends Component {
     super(props);
     this.handleFormUpdate = this.handleFormUpdate.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
 
   }
-  handleFormUpdate(e){
+  handleFormUpdate(e) {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    this.props.updateEdf({"title": title, "description": description});
+    this.props.assignEdf({ "title": title, "description": description });
   }
   render() {
-    
+
     return (
       <div className="data-creation-form">
         <h3>Text Info</h3>
@@ -56,8 +56,8 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  updateEdf: (info) => (
-    dispatch(actions.updateEdf(info))
+  assignEdf: (info) => (
+    dispatch(actions.assignEdf(info))
   )
 });
 export default connect(

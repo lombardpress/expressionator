@@ -8,6 +8,7 @@ import WitnessesCreation from "./WitnessesCreation.js";
 import NavBar from "./NavBar.js";
 import PersonsListViewer from "./PersonsListViewer.js";
 import WitnessesListViewer from "./WitnessesListViewer.js";
+import EdfListViewer from './EdfListViewer.js';
 import Axios from "axios";
 import { actions } from "../store";
 
@@ -15,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {}
+  componentDidMount() { }
   render() {
     const creationView = view => {
       if (view === "edfCreation") {
@@ -38,6 +39,7 @@ class App extends Component {
           <div className="data-lists">
             <PersonsListViewer />
             <WitnessesListViewer />
+            <EdfListViewer />
           </div>
           <div className="creation-view">
             <div>{creationView(this.props.view.dataCreationView)}</div>

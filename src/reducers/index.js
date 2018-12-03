@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import edfInfo from './edfInfo';
+import edfListInfo from './edfListInfo'
 import personsInfo from './personsInfo';
 import personInfo from './personInfo';
 import witnessInfo from './witnessInfo';
@@ -8,6 +9,7 @@ import view from './view';
 
 const rootReducer = combineReducers({
   edfInfo: edfInfo,
+  edfListInfo: edfListInfo,
   personsInfo: personsInfo,
   personInfo: personInfo,
   witnessInfo: witnessInfo,
