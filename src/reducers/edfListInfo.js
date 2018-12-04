@@ -19,6 +19,21 @@ const edfListReducer = (state = {}, action) => {
         }
       });
       return newArray
+    case ActionTypes.REQUEST_EDF_ITEMS:
+      return state
+    case ActionTypes.RECEIVE_EDF_ITEMS:
+    return(
+      state.map(edf => {
+        if (edf.id === action.expressionShortId) {
+          return {
+            ...edf,
+            items: action.edfItems
+          }
+        } else {
+          return edf
+        }
+      })
+    )
     case ActionTypes.CREATE_EDF:
       /// change this to available witness list
       const edfList = state.slice();

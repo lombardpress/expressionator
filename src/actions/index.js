@@ -123,6 +123,54 @@ export function fetchEdfList() {
   });
 }
 
+/// EDF Item Fetch Sequence
+
+// EDF actions
+export function requestEdfItems(expressionShortId) {
+  return {
+    type: ActionTypes.REQUEST_EDF_ITEMS,
+  };
+}
+export function receiveEdfItems(expressionShortId, edfItems) {
+  return {
+    type: ActionTypes.RECEIVE_EDF_ITEMS,
+    expressionShortId,
+    edfItems
+  };
+}
+export function receiveEdfItemsFailure(expressionShortId, error) {
+  return {
+    type: ActionTypes.RECEIVE_EDFS_ITEMS_FAILURE,
+    expressionShortId,
+    error
+  };
+}
+export function fetchEdfItems(expressionShortId) {
+  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const query = [
+    "SELECT DISTINCT ?item ?itemTitle ?questionTitle ",
+    "WHERE { ",
+    "<http://scta.info/resource/" + expressionShortId + "> a <http://scta.info/resource/expression> .",
+    "?item <http://scta.info/property/isPartOfTopLevelExpression> <http://scta.info/resource/" + expressionShortId + "> .",
+    "?item <http://purl.org/dc/elements/1.1/title> ?itemTitle .",
+    "OPTIONAL",
+    "{",
+    "?item <http://scta.info/property/questionTitle> ?questionTitle .",
+    "}",
+    "?item <http://scta.info/property/totalOrderNumber> ?order .",
+    "}",
+    "ORDER BY ?order"].join('');
+  return ((dispatch) => {
+    dispatch(requestEdfItems(expressionShortId));
+    Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
+      console.log("response", res)
+      dispatch(receiveEdfItems(expressionShortId, res.data.results.bindings))
+    })
+      .catch(error => dispatch(receiveEdfItemsFailure(expressionShortId, error))
+      );
+  });
+}
+
 
 export function changeDataCreationView(dataCreationView) {
   if (!dataCreationView) {

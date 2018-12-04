@@ -24,7 +24,14 @@ class EdfListViewer extends Component {
           || edf.authorTitle.toLowerCase().includes(searchText.toLowerCase())
         ) {
           return (
-            <EdfListItem key={edf.id} authorTitle={edf.authorTitle} edfId={edf.id} edfTitle={edf.title} edfStatus={edf.status} proposedChange={edf.proposedChange} />
+            <EdfListItem
+              key={edf.id}
+              authorTitle={edf.authorTitle}
+              edfId={edf.id}
+              edfTitle={edf.title}
+              edfStatus={edf.status}
+              proposedChange={edf.proposedChange}
+            />
           )
         }
       });
@@ -33,7 +40,7 @@ class EdfListViewer extends Component {
     return (
       <div className="edfsList">
         <form onChange={this.handleOnChangeSearchText}>
-          <p>Filter Names</p>
+          <p>Filter Text Expression</p>
           <input type="text" />
         </form>
         {displayEdfs(this.props, this.state.searchText)}

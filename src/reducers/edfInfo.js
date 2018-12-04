@@ -9,7 +9,8 @@ const edfReducer = (state = {}, action) => {
       return {
         id: action.id,
         title: action.title,
-        description: action.description
+        description: action.description,
+        items: action.items
       }
     case ActionTypes.UPDATE_EDF:
       return {

@@ -14,6 +14,7 @@ class EdfListItem extends Component {
       description: 'description'
     }
     this.props.assignEdf(info)
+    this.props.fetchEdfItems(this.props.edfId)
 
     this.props.assignPerson(this.props.authorTitle, 'description')
   }
@@ -59,6 +60,9 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => ({
   assignEdf: (info) => (
     dispatch(actions.assignEdf(info))
+  ),
+  fetchEdfItems: (expressionShortId) => (
+    dispatch(actions.fetchEdfItems(expressionShortId))
   ),
   assignPerson: (title, description) => (
     dispatch(actions.assignPerson(title, description))
