@@ -23,16 +23,16 @@ export function receivePersonsFailure(error) {
 export function fetchPersons() {
   const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
   const query = [
-    "SELECT DISTINCT ?author ?authorTitle ?authorShortId ",
+    "SELECT DISTINCT ?person ?personTitle ?personShortId ",
     "WHERE { ",
     "?author a <http://scta.info/resource/person> .",
     "?resource a <http://scta.info/resource/expression> .",
     "?resource <http://scta.info/property/level> '1' .",
-    "?resource <http://www.loc.gov/loc.terms/relators/AUT> ?author .",
-    "?author <http://scta.info/property/shortId> ?authorShortId .",
-    "?author <http://purl.org/dc/elements/1.1/title> ?authorTitle .",
+    "?resource <http://www.loc.gov/loc.terms/relators/AUT> ?person .",
+    "?person <http://scta.info/property/shortId> ?personShortId .",
+    "?person <http://purl.org/dc/elements/1.1/title> ?personTitle .",
     "}",
-    "ORDER BY ?authorTitle"].join('');
+    "ORDER BY ?personTitle"].join('');
   return ((dispatch) => {
     dispatch(requestPersons());
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
@@ -183,13 +183,7 @@ export function changeDataCreationView(dataCreationView) {
   }
 }
 
-export function assignPerson(title, description) {
-  return {
-    type: ActionTypes.ASSIGN_PERSON,
-    title,
-    description
-  }
-}
+
 export function createAndAttachWitness(title, description) {
   const id = "cod-" + makeid();
   return ((dispatch) => {
@@ -275,3 +269,52 @@ export function clearEdfInfo(info) {
     type: ActionTypes.CLEAR_EDF_INFO,
   }
 }
+
+// person actions
+
+export function createAndAssignPerson(info) {
+  const id = "P" + makeid();
+  info.id = id;
+  return ((dispatch) => {
+    dispatch(createPerson(info))
+    dispatch(assignPerson(info))
+  });
+}
+export function assignPerson(info) {
+  return {
+    type: ActionTypes.ASSIGN_PERSON,
+    id: info.id,
+    title: info.title,
+    description: info.description
+  }
+}
+export function createPerson(info) {
+  return {
+    type: ActionTypes.CREATE_PERSON,
+    id: info.id,
+    title: info.title,
+    description: info.description
+  }
+}
+export function updatePerson(info) {
+  return {
+    type: ActionTypes.UPDATE_PERSON,
+    id: info.id,
+    title: info.title,
+    description: info.description
+  }
+}
+export function clearPersonInfo() {
+  return {
+    type: ActionTypes.CLEAR_PERSON_INFO,
+  }
+}
+
+// TODO: need to break this up into, create, update, assign
+// export function assignPerson(title, description) {
+//   return {
+//     type: ActionTypes.ASSIGN_PERSON,
+//     title,
+//     description
+//   }
+// }

@@ -19,9 +19,15 @@ class PersonsListViewer extends Component {
   render() {
     function displayAuthors(props, searchText){
       const displayAuthors = props.personsInfo.map((author) =>{
-        if (!searchText || author.authorTitle.value.includes(searchText)){
+        if (!searchText || author.title.includes(searchText)){
           return(
-            <PersonsListItem key={author.authorShortId.value} personId={author.authorShortId.value} personTitle={author.authorTitle.value}/>
+            <PersonsListItem
+              key={author.id}
+              id={author.id}
+              title={author.title}
+              status={author.status}
+              proposedChange={author.proposedChange}
+            />
           )
         }
       });

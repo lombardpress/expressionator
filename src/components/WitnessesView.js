@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import WitnessView from './WitnessView';
+import WitnessCreation from "./WitnessCreation";
 
 
 class WitnessesView extends Component {
@@ -20,7 +21,10 @@ class WitnessesView extends Component {
     }
     return (
       <div>
+        <h3>Witness Info</h3>
         {displayWitnesses(this.props.witnessInfo)}
+        <WitnessCreation/>
+
       </div>
     )
   }

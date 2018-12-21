@@ -5,53 +5,36 @@ import { actions } from "../store";
 class WitnessCreation extends Component {
   constructor(props) {
     super(props);
-    this.handleWitnessUpdate = this.handleWitnessUpdate.bind(this);
-    this.handleAddNewWitnessView = this.handleAddNewWitnessView.bind(this);
+    this.handleAddNewWitness = this.handleAddNewWitness.bind(this);
   }
   componentDidMount() { }
-  handleAddNewWitnessView() {
-    this.props.changeFocusedWitness("")
-  }
-  handleWitnessUpdate(e) {
+
+  handleAddNewWitness(e) {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    if (this.props.view.focusedWitness) {
-      this.props.updateWitness(this.props.view.focusedWitness, title, description)
-    } else {
-      this.props.createAndAttachWitness(title, description);
-    }
+    this.props.createAndAttachWitness(title, description);
+    //clears form after submission; not sure this is the correct react way to do this.
+    this.refs.form.title.value = "";
+    this.refs.form.description.value = "";
   }
   render() {
-    const defaultValue = (type, witnessInfo, view) => {
-      if (view.focusedWitness) {
-        return witnessInfo.find(wit => wit.id === view.focusedWitness)[type]
-      } else {
-        return ''
-      }
-    }
-
     return (
       <div className="data-creation-form">
-        <h3>Witness Info</h3>
-        <form ref="form" onSubmit={this.handleWitnessUpdate}>
+        <h3>Assign New Witness</h3>
+        <form ref="form" onSubmit={this.handleAddNewWitness}>
           <label>Title</label>
           <input
             type="text"
             name="title"
-            defaultValue={defaultValue('title', this.props.witnessInfo, this.props.view)}
-            key={defaultValue('id', this.props.witnessInfo, this.props.view)}
           />
           <label>Description</label>
           <input
             type="text"
             name="description"
-            defaultValue={defaultValue('description', this.props.witnessInfo, this.props.view)}
-            key={"desc" + defaultValue('description', this.props.witnessInfo, this.props.view)}
           />
           <input type="submit" />
         </form>
-        <button onClick={this.handleAddNewWitnessView}>Add New Witness</button>
       </div>
     );
   }
@@ -77,14 +60,9 @@ const mapStateToProps = state => ({
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  attachWitness: (name, description) =>
-    dispatch(actions.attachWitness(name, description)),
-  updateWitness: (id, name, description) =>
-    dispatch(actions.updateWitness(id, name, description)),
   createAndAttachWitness: (name, description) =>
-    dispatch(actions.createAndAttachWitness(name, description)),
-  changeFocusedWitness: (id) =>
-    dispatch(actions.changeFocusedWitness(id))
+    dispatch(actions.createAndAttachWitness(name, description))
+
 });
 export default connect(
   mapStateToProps,

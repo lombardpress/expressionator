@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import logo from "./logo.svg";
-import EdfCreation from "./EdfCreation.js";
-import DataViewer from "./DataViewer.js";
-import PersonCreation from "./PersonCreation.js";
-import WitnessesCreation from "./WitnessesCreation.js";
+//import EdfCreation from "./EdfCreation.js";
+//import DataViewer from "./DataViewer.js";
+//import PersonCreation from "./PersonCreation.js";
+//import WitnessesCreation from "./WitnessesCreation.js";
 import NavBar from "./NavBar.js";
 import PersonsListViewer from "./PersonsListViewer.js";
 import WitnessesListViewer from "./WitnessesListViewer.js";
 import EdfListViewer from './EdfListViewer.js';
+import WitnessesView from './WitnessesView.js';
+import PersonViewer from './PersonViewer.js';
+import EdfViewer from './EdfViewer.js';
+
 import Axios from "axios";
 import { actions } from "../store";
 
@@ -18,17 +22,7 @@ class App extends Component {
   }
   componentDidMount() { }
   render() {
-    const creationView = view => {
-      if (view === "edfCreation") {
-        return <EdfCreation />;
-      } else if (view === "personCreation") {
-        return <PersonCreation />;
-      } else if (view === "witnessCreation") {
-        return <WitnessesCreation />;
-      } else {
-        return <EdfCreation />;
-      }
-    };
+
     return (
       <div className="App">
         <header className="App-header">
@@ -42,9 +36,10 @@ class App extends Component {
             <EdfListViewer />
           </div>
           <div className="creation-view">
-            <div>{creationView(this.props.view.dataCreationView)}</div>
-            <div>
-              <DataViewer />
+            <div className="data-view">
+              <EdfViewer/>
+              <PersonViewer/>
+              <WitnessesView />
             </div>
           </div>
         </div>

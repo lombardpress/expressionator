@@ -49,11 +49,20 @@ const edfListReducer = (state = {}, action) => {
       return (
         state.map(edf => {
           if (edf.id === action.id) {
-            return {
-              ...edf,
-              proposedChange: {
+            if (edf.status === 'provisional'){
+              return {
+                ...edf,
                 title: action.title,
                 description: action.description
+              }
+            }
+            else{
+              return {
+                ...edf,
+                proposedChange: {
+                  title: action.title,
+                  description: action.description
+                }
               }
             }
           } else {
