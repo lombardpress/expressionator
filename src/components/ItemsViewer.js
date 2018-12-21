@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Item from './Item';
+import ItemCreation from './ItemCreation';
 
 
 
@@ -17,18 +18,10 @@ class ItemsViewer extends Component {
       if (edf){
         if (edf.items){
            questionTitles = edf.items.map((item) => {
-             const title = item.proposedChange ? item.proposedChange.title : item.itemTitle.value
-             let questionTitle = ""
+             const title = item.proposedChange ? item.proposedChange.title : item.title
+             let questionTitle = item.proposedChange ? item.proposedChange.questionTitle : item.questionTitle
              const status = item.proposedChange ? "provisional" : "SCTA"
-             if (item.proposedChange) {
-               questionTitle = item.proposedChange.questionTitle
-             }
-             else if (item.questionTitle)
-             {
-              questionTitle = item.questionTitle.value
-             }
-
-             const id = item.itemShortId.value;
+             const id = item.id;
              return (
               <Item title={title} questionTitle={questionTitle} edfId={targetEdf.id} id={id} key={id} status={status} />
             )
@@ -42,6 +35,7 @@ class ItemsViewer extends Component {
       <div>
         <h3>Items</h3>
         {displayItems(this.props.edfInfo, this.props.edfListInfo)}
+        <ItemCreation/>
       </div>
     )
   }

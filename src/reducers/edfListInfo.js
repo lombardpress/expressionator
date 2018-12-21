@@ -22,12 +22,19 @@ const edfListReducer = (state = {}, action) => {
     case ActionTypes.REQUEST_EDF_ITEMS:
       return state
     case ActionTypes.RECEIVE_EDF_ITEMS:
+      const organizedItems = action.edfItems.map((item) => {
+        return {
+          id: item.itemShortId.value,
+          title: item.itemTitle.value,
+          questionTitle: item.questionTitle ? item.questionTitle.value : ""
+        }
+      })
     return(
       state.map(edf => {
         if (edf.id === action.expressionShortId) {
           return {
             ...edf,
-            items: action.edfItems
+            items: organizedItems
           }
         } else {
           return edf
@@ -35,42 +42,32 @@ const edfListReducer = (state = {}, action) => {
       })
     )
     case ActionTypes.UPDATE_ITEM:
-        const copyState = state
-        const edf = copyState.find((edf) => edf.id === action.edfId);
-        console.log(edf)
-        const item = edf.items.find((item) => item.itemShortId.value === action.id);
-        console.log("item", item)
+        // this variable name "with 1" is to distinguish it from the variable below
+        // but this seems weird and suggest that this pattern is not the best way to do things.
+        const copyState1 = state
+        const edf1 = copyState1.find((edf) => edf.id === action.edfId);
+        const item = edf1.items.find((item) => item.id === action.id);
         item.proposedChange = {
           title: action.title,
           questionTitle: action.questionTitle,
         }
         return [
-          ...copyState
+          ...copyState1
         ]
-
-      //   state.map(edf => {
-      //     if (edf.id === action.id) {
-      //       if (edf.status === 'provisional'){
-      //         return {
-      //           ...edf,
-      //           title: action.title,
-      //           description: action.description
-      //         }
-      //       }
-      //       else{
-      //         return {
-      //           ...edf,
-      //           proposedChange: {
-      //             title: action.title,
-      //             description: action.description
-      //           }
-      //         }
-      //       }
-      //     } else {
-      //       return edf
-      //     }
-      //   })
-      // )
+    case ActionTypes.CREATE_ITEM:
+      const copyState2 = state
+      const edf2 = copyState2.find((edf) => edf.id === action.edfId);
+      const newItem = {
+        id: action.id,
+        proposedChange:{
+          title: action.title,
+          questionTitle: action.questionTitle
+        }
+      }
+      edf2.items.push(newItem)
+      return [
+        ...copyState2
+      ]
     case ActionTypes.CREATE_EDF:
       /// change this to available witness list
       const edfList = state.slice();

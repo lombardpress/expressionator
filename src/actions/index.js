@@ -317,3 +317,14 @@ export function updateItem(info) {
     ...info
   }
 }
+
+export function createItem(edfId, info) {
+  console.log("edfId", edfId)
+  const itemId = edfId + "-" + makeid();
+  return {
+    type: ActionTypes.CREATE_ITEM,
+    edfId: edfId,
+    id: itemId,
+    ...info
+  }
+}
