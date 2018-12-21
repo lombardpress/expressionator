@@ -34,6 +34,43 @@ const edfListReducer = (state = {}, action) => {
         }
       })
     )
+    case ActionTypes.UPDATE_ITEM:
+        const copyState = state
+        const edf = copyState.find((edf) => edf.id === action.edfId);
+        console.log(edf)
+        const item = edf.items.find((item) => item.itemShortId.value === action.id);
+        console.log("item", item)
+        item.proposedChange = {
+          title: action.title,
+          questionTitle: action.questionTitle,
+        }
+        return [
+          ...copyState
+        ]
+
+      //   state.map(edf => {
+      //     if (edf.id === action.id) {
+      //       if (edf.status === 'provisional'){
+      //         return {
+      //           ...edf,
+      //           title: action.title,
+      //           description: action.description
+      //         }
+      //       }
+      //       else{
+      //         return {
+      //           ...edf,
+      //           proposedChange: {
+      //             title: action.title,
+      //             description: action.description
+      //           }
+      //         }
+      //       }
+      //     } else {
+      //       return edf
+      //     }
+      //   })
+      // )
     case ActionTypes.CREATE_EDF:
       /// change this to available witness list
       const edfList = state.slice();

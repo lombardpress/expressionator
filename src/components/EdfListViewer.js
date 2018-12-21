@@ -31,6 +31,7 @@ class EdfListViewer extends Component {
               edfTitle={edf.title}
               edfStatus={edf.status}
               proposedChange={edf.proposedChange}
+              items={edf.items}
             />
           )
         }

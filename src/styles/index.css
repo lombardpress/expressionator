@@ -51,6 +51,10 @@ code {
   margin: auto
 }
 
+.column{
+  width: 25%
+}
+
 label,
 input {
   display: block;

@@ -148,11 +148,12 @@ export function receiveEdfItemsFailure(expressionShortId, error) {
 export function fetchEdfItems(expressionShortId) {
   const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
   const query = [
-    "SELECT DISTINCT ?item ?itemTitle ?questionTitle ",
+    "SELECT DISTINCT ?item ?itemTitle ?questionTitle ?itemShortId ",
     "WHERE { ",
     "<http://scta.info/resource/" + expressionShortId + "> a <http://scta.info/resource/expression> .",
     "?item <http://scta.info/property/isPartOfTopLevelExpression> <http://scta.info/resource/" + expressionShortId + "> .",
     "?item <http://purl.org/dc/elements/1.1/title> ?itemTitle .",
+    "?item <http://scta.info/property/shortId> ?itemShortId .",
     "OPTIONAL",
     "{",
     "?item <http://scta.info/property/questionTitle> ?questionTitle .",
@@ -310,11 +311,9 @@ export function clearPersonInfo() {
   }
 }
 
-// TODO: need to break this up into, create, update, assign
-// export function assignPerson(title, description) {
-//   return {
-//     type: ActionTypes.ASSIGN_PERSON,
-//     title,
-//     description
-//   }
-// }
+export function updateItem(info) {
+  return {
+    type: ActionTypes.UPDATE_ITEM,
+    ...info
+  }
+}

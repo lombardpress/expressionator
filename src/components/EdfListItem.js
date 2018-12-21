@@ -14,7 +14,9 @@ class EdfListItem extends Component {
       description: 'description'
     }
     this.props.assignEdf(info)
-    this.props.fetchEdfItems(this.props.edfId)
+    if (!this.props.items){
+      this.props.fetchEdfItems(this.props.edfId)
+    }
 
     this.props.assignPerson(this.props.authorTitle, 'description')
   }

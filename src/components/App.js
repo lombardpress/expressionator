@@ -12,6 +12,8 @@ import EdfListViewer from './EdfListViewer.js';
 import WitnessesView from './WitnessesView.js';
 import PersonViewer from './PersonViewer.js';
 import EdfViewer from './EdfViewer.js';
+import ItemsViewer from './ItemsViewer.js';
+
 
 import Axios from "axios";
 import { actions } from "../store";
@@ -30,17 +32,18 @@ class App extends Component {
         </header>
         <NavBar />
         <div className="body-wrapper">
-          <div className="data-lists">
+          <div className="data-lists column">
             <PersonsListViewer />
             <WitnessesListViewer />
             <EdfListViewer />
           </div>
-          <div className="creation-view">
-            <div className="data-view">
+          <div className="column">
               <EdfViewer/>
               <PersonViewer/>
               <WitnessesView />
-            </div>
+          </div>
+          <div className="column">
+            <ItemsViewer />
           </div>
         </div>
       </div>
