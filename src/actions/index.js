@@ -165,7 +165,6 @@ export function fetchEdfItems(expressionShortId) {
   return ((dispatch) => {
     dispatch(requestEdfItems(expressionShortId));
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
-      console.log("response", res)
       dispatch(receiveEdfItems(expressionShortId, res.data.results.bindings))
     })
       .catch(error => dispatch(receiveEdfItemsFailure(expressionShortId, error))
@@ -206,7 +205,6 @@ export function fetchEdfManifestations(expressionShortId) {
   return ((dispatch) => {
     dispatch(requestEdfManifestations(expressionShortId));
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
-      console.log("response", res)
       dispatch(receiveEdfManifestations(expressionShortId, res.data.results.bindings))
       console.log(res)
       res.data.results.bindings.forEach((item) => {
@@ -388,7 +386,6 @@ export function updateItem(info) {
 }
 
 export function createItem(edfId, info) {
-  console.log("edfId", edfId)
   const itemId = edfId + "-" + makeid();
   return {
     type: ActionTypes.CREATE_ITEM,

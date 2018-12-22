@@ -10,7 +10,6 @@ class WitnessesView extends Component {
   }
 
   render() {
-    console.log("Inside render: ", this.props.witnessInfo)
     const displayWitnesses = (witnesses) => {
       const witnessArray = witnesses.map(item => {
         const wit = this.props.witnessesInfo.find((wit) => wit.id === item.id)

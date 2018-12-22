@@ -13,7 +13,6 @@ export function exportToXml(state) {
     //(this is need for non manuscript (born digital) manifestations that do not correlate to a witness in the witness list)
     else{
       const edf = state.edfListInfo.find((edf) => edf.id === state.edfInfo.id)
-      console.log("edf in conversion", edf);
       const edfWit = edf.manifestations.find((wit) => wit.id === witness.id)
       witTitle = edfWit.proposedChange ? edfWit.proposedChange.title : edfWit.title;
       witDescription = edfWit.proposedChange ? edfWit.proposedChange.description : edfWit.description;
