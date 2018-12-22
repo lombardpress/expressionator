@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fileDownload from 'js-file-download';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 import { exportToXml } from "../exportToXml";
@@ -6,23 +7,17 @@ import { exportToXml } from "../exportToXml";
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.packageData = this.packageData.bind(this);
-    this.downloadTitle = this.downloadTitle.bind(this);
+    this.handleDownloadOnclick = this.handleDownloadOnclick.bind(this);
   }
-
-  packageData(){
+  handleDownloadOnclick(){
     const data = exportToXml(this.props)
-    const dataLink = "data:application/xml;charset=utf-8," + encodeURI(data)
-    return dataLink
-  }
-  downloadTitle(){
-    const title = this.props.edfInfo.id
-    return title
+    fileDownload(data, this.props.edfInfo.id +'.xml');
+    window.location.href = "data:application/xml;charset=utf-8," + encodeURI(data)
   }
   render() {
     return (
       <div className="navbar">
-        <a href={this.packageData()} download={this.downloadTitle()}>Export Edf v. 0.0.0</a>
+        <a onClick={this.handleDownloadOnclick}>Export Edf v. 0.0.0</a>
       </div>
     );
   }
