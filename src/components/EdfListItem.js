@@ -17,8 +17,15 @@ class EdfListItem extends Component {
     if (!this.props.items){
       this.props.fetchEdfItems(this.props.edfId)
     }
-
-    this.props.assignPerson(this.props.authorTitle, 'description')
+    this.props.clearAssignedEdfManifestations(this.props.edfId)
+    if (!this.props.manifestations){
+      this.props.fetchEdfManifestations(this.props.edfId)
+    }
+    else{
+      const edfObject = this.props.edfList.find((edf) => edf.id === this.props.edfId)
+      this.props.assignManifestations(edfObject)
+    }
+    this.props.assignPerson({id: this.props.authorId, title: "title", description: 'description'})
   }
   render() {
     const displayProposedChange = (edf) => {
@@ -66,8 +73,17 @@ const mapDispatchToProps = dispatch => ({
   fetchEdfItems: (expressionShortId) => (
     dispatch(actions.fetchEdfItems(expressionShortId))
   ),
-  assignPerson: (title, description) => (
-    dispatch(actions.assignPerson(title, description))
+  fetchEdfManifestations: (expressionShortId) => (
+    dispatch(actions.fetchEdfManifestations(expressionShortId))
+  ),
+  clearAssignedEdfManifestations: (edfId) => (
+    dispatch(actions.clearAssignedEdfManifestations(edfId))
+  ),
+  assignManifestations: (edfObject) => (
+    dispatch(actions.assignManifestations(edfObject))
+  ),
+  assignPerson: (info) => (
+    dispatch(actions.assignPerson(info))
   )
 });
 export default connect(

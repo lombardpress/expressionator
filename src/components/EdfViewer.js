@@ -36,6 +36,13 @@ class EdfViewer extends Component {
   }
 
   render() {
+    let title = ""
+    let description = ""
+    const edf = this.props.edfListInfo.find((edf) => edf.id === this.props.edfInfo.id)
+    if (edf) {
+      title = edf.proposedChange ? edf.proposedChange.title : edf.title;
+      description = edf.proposedChange ? edf.proposedChange.description : edf.description;
+    }
     return (
       <div>
         <h3>Text Info</h3>
@@ -43,13 +50,13 @@ class EdfViewer extends Component {
           <p>Id: {this.props.edfInfo.id}</p>
           <p>Title</p>
           <p contentEditable={this.state.editMode} ref="title">
-            {this.props.edfInfo.title}
+            {title}
           </p>
         </div>
         <div>
           <p>Description</p>
           <p contentEditable={this.state.editMode} ref="description">
-            {this.props.edfInfo.description}</p>
+            {description}</p>
         </div>
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
         <button onClick={this.handleCreateNewEdf}>Start New Edf Entry</button>
@@ -66,6 +73,7 @@ class EdfViewer extends Component {
 const mapStateToProps = state => (
   {
     edfInfo: state.edfInfo,
+    edfListInfo: state.edfListInfo,
     personsInfo: state.personsInfo,
     personInfo: state.personInfo,
     witnessInfo: state.witnessInfo,

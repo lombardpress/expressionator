@@ -13,7 +13,7 @@ const edfListReducer = (state = {}, action) => {
         return {
           id: shortId,
           title: item.expressionTitle.value,
-          authorTitle: item.authorTitle.value,
+          authorId: item.authorShortId.value,
           description: "scta description",
           status: "SCTA"
         }
@@ -44,7 +44,7 @@ const edfListReducer = (state = {}, action) => {
     case ActionTypes.UPDATE_ITEM:
         // this variable name "with 1" is to distinguish it from the variable below
         // but this seems weird and suggest that this pattern is not the best way to do things.
-        const copyState1 = state
+        const copyState1 = state.slice();
         const edf1 = copyState1.find((edf) => edf.id === action.edfId);
         const item = edf1.items.find((item) => item.id === action.id);
         item.proposedChange = {
@@ -55,7 +55,7 @@ const edfListReducer = (state = {}, action) => {
           ...copyState1
         ]
     case ActionTypes.CREATE_ITEM:
-      const copyState2 = state
+      const copyState2 = state.slice();
       const edf2 = copyState2.find((edf) => edf.id === action.edfId);
       const newItem = {
         id: action.id,
@@ -68,6 +68,29 @@ const edfListReducer = (state = {}, action) => {
       return [
         ...copyState2
       ]
+    //
+    case ActionTypes.REQUEST_EDF_MANIFESTATIONS:
+      return state
+    case ActionTypes.RECEIVE_EDF_MANIFESTATIONS:
+      const organizedManifestations = action.edfManifestations.map((m) => {
+        return {
+          id: m.witnessShortId.value,
+          title: "title",
+          description: "description"
+        }
+      })
+    return(
+      state.map(edf => {
+        if (edf.id === action.expressionShortId) {
+          return {
+            ...edf,
+            manifestations: organizedManifestations,
+          }
+        } else {
+          return edf
+        }
+      })
+    )
     case ActionTypes.CREATE_EDF:
       /// change this to available witness list
       const edfList = state.slice();

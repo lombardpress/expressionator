@@ -7,6 +7,7 @@ class WitnessView extends Component {
   constructor(props) {
     super(props);
     this.handleToggleEdit = this.handleToggleEdit.bind(this);
+    this.handleRemoveWitness = this.handleRemoveWitness.bind(this);
     this.state = {
       editMode: false,
     }
@@ -25,14 +26,20 @@ class WitnessView extends Component {
     }
     this.setState((state) => ({editMode: !state.editMode}))
   }
+  handleRemoveWitness(e){
+    e.preventDefault();
+    this.props.unAttachWitness(this.props.id)
+  }
 
   render() {
 
     return (
-      <div onClick={() => this.props.changeFocusedWitness(this.props.id)}>
+      <div>
+        <p ref="id">{this.props.id}</p>
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="description">Description: {this.props.description}</p>
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
+        <button onClick={this.handleRemoveWitness}>Remove</button>
       </div>
     )
   }
@@ -65,6 +72,8 @@ const mapDispatchToProps = dispatch => ({
   ),
   updateWitness: (id, name, description) =>
     dispatch(actions.updateWitness(id, name, description)),
+  unAttachWitness: (id) =>
+    dispatch(actions.unAttachWitness(id))
 });
 export default connect(
   mapStateToProps,

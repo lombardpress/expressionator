@@ -1,10 +1,27 @@
 export function exportToXml(state) {
 
   const witnesses = state.witnessInfo.map((witness) => {
+    let witTitle = ""
+    let witDescription = ""
+    // first try to get title from witness list using id assigned to working edf
+    const targetWit = state.witnessesInfo.find((wit) => wit.id === witness.id)
+    if (targetWit){
+      witTitle = targetWit.proposedChange ? targetWit.proposedChange.title : targetWit.title;
+      witDescription = targetWit.proposedChange ? targetWit.proposedChange.description : targetWit.description;
+    }
+    // second try to get title from manifestation list assigned to edf received from scta
+    //(this is need for non manuscript (born digital) manifestations that do not correlate to a witness in the witness list)
+    else{
+      const edf = state.edfListInfo.find((edf) => edf.id === state.edfInfo.id)
+      console.log("edf in conversion", edf);
+      const edfWit = edf.manifestations.find((wit) => wit.id === witness.id)
+      witTitle = edfWit.proposedChange ? edfWit.proposedChange.title : edfWit.title;
+      witDescription = edfWit.proposedChange ? edfWit.proposedChange.description : edfWit.description;
+    }
     text = [
     '     <witness id="' + witness.id + '">',
     '       <slug>' + witness.id + '</slug>',
-    '       <title>' + witness.title.replace("&", "&amp;") + '</title>',
+    '       <title>' + witTitle.replace("&", "&amp;") + '</title>',
     '       <initial>' + witness.id + '</initial>',
     '     </witness>'
     ].join("\n")
@@ -27,16 +44,22 @@ export function exportToXml(state) {
       return text
     })
   }
+  const person = state.personsInfo.find((p) => p.id === state.personInfo.id)
+  const personTitle = person.proposedChange ? person.proposedChange.title : person.title;
+  const personDescription = person.proposedChange ? person.proposedChange.description : person.description;
+  const edf = state.edfListInfo.find((edf) => edf.id === state.edfInfo.id)
+  const edfTitle = edf.proposedChange ? edf.proposedChange.title : edf.title;
+  const edfDescription = edf.proposedChange ? edf.proposedChange.description : edf.description;
   var text = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<?xml-model href="https://raw.githubusercontent.com/scta/edf-schema/master/src/projectfile.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>',
     '<listofFileNames>',
     '  <header>',
-    '    <authorName>' + state.personInfo.title + '</authorName>',
-    '    <commentaryName>' + state.edfInfo.title.replace("&", "&amp") + '</commentaryName>',
+    '    <authorName>' + personTitle + '</authorName>',
+    '    <commentaryName>' + edfTitle.replace("&", "&amp") + '</commentaryName>',
     '    <commentaryid>' + state.edfInfo.id + '</commentaryid>',
     '    <commentaryslug>' + state.edfInfo.id + '</commentaryslug>',
-    '    <alias>' + state.edfInfo.title.replace(/\s+/g, " ") + '</alias>',
+    '    <alias>' + edfTitle.replace(/\s+/g, " ") + '</alias>',
     '    <authorUri>http://scta.info/resource/' + state.personInfo.id + '</authorUri>',
     '    <parentUri>http://scta.info/resource/' + state.edfInfo.id + '</parentUri>',
     '    <parentWorkGroup>http://scta.info/resource/uncategorized</parentWorkGroup>',

@@ -17,6 +17,11 @@ const witnessReducer = (state = [], action) => {
         });
         return currentWitnesses;
       }
+    case ActionTypes.UN_ATTACH_WITNESS:
+      const newList = state.filter((item) => item.id !== action.id);
+      return newList;
+    case ActionTypes.CLEAR_ASSIGNED_EDF_MANIFESTATIONS:
+      return []
     case ActionTypes.UPDATE_WITNESS:
       return (
         state.map(witness => {

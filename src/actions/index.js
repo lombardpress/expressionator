@@ -103,13 +103,14 @@ export function receiveEdfListFailure(error) {
 export function fetchEdfList() {
   const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
   const query = [
-    "SELECT DISTINCT ?expression ?expressionTitle ?authorTitle ?expressionShortId ",
+    "SELECT DISTINCT ?expression ?expressionTitle ?authorTitle ?expressionShortId ?authorShortId ",
     "WHERE { ",
     "?expression a <http://scta.info/resource/expression> .",
     "?expression <http://scta.info/property/level> '1' .",
     "?expression <http://scta.info/property/shortId> ?expressionShortId .",
     "?expression <http://www.loc.gov/loc.terms/relators/AUT> ?author .",
     "?author <http://purl.org/dc/elements/1.1/title> ?authorTitle .",
+    "?author <http://scta.info/property/shortId> ?authorShortId .",
     "?expression <http://purl.org/dc/elements/1.1/title> ?expressionTitle .",
     "}",
     "ORDER BY ?expressionTitle"].join('');
@@ -172,6 +173,66 @@ export function fetchEdfItems(expressionShortId) {
   });
 }
 
+// EDF Witness List request sequence
+export function requestEdfManifestations(expressionShortId) {
+  return {
+    type: ActionTypes.REQUEST_EDF_MANIFESTATIONS,
+  };
+}
+export function receiveEdfManifestations(expressionShortId, edfManifestations) {
+  return {
+    type: ActionTypes.RECEIVE_EDF_MANIFESTATIONS,
+    expressionShortId,
+    edfManifestations
+  };
+}
+export function receiveEdfManifestationsFailure(expressionShortId, error) {
+  return {
+    type: ActionTypes.RECEIVE_EDFS_MANIFESTATIONS_FAILURE,
+    expressionShortId,
+    error
+  };
+}
+export function fetchEdfManifestations(expressionShortId) {
+  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const query = [
+    "SELECT DISTINCT ?manifestationShortId ?witnessShortId ",
+    "WHERE { ",
+    "<http://scta.info/resource/" + expressionShortId + "> <http://scta.info/property/hasManifestation> ?manifestation .",
+    "?manifestation <http://scta.info/property/shortId> ?manifestationShortId .",
+    "?manifestation <http://scta.info/property/hasSlug> ?witnessShortId .",
+    "}"
+    ].join('');
+  return ((dispatch) => {
+    dispatch(requestEdfManifestations(expressionShortId));
+    Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
+      console.log("response", res)
+      dispatch(receiveEdfManifestations(expressionShortId, res.data.results.bindings))
+      console.log(res)
+      res.data.results.bindings.forEach((item) => {
+        dispatch(attachWitness(item.witnessShortId.value, "title", "description"))
+      });
+
+    })
+      .catch(error => dispatch(receiveEdfManifestationsFailure(expressionShortId, error))
+      );
+  });
+}
+
+export function assignManifestations(edf) {
+  return ((dispatch) => {
+    edf.manifestations.forEach((m) => {
+      dispatch(attachWitness(m.id, "title", "description"))
+    })
+  });
+}
+export function clearAssignedEdfManifestations(edfId) {
+  return {
+    type: ActionTypes.CLEAR_ASSIGNED_EDF_MANIFESTATIONS,
+    edfId: edfId
+  };
+}
+
 
 export function changeDataCreationView(dataCreationView) {
   if (!dataCreationView) {
@@ -209,6 +270,14 @@ export function attachWitness(id, title, description) {
     type: ActionTypes.ATTACH_WITNESS,
     title,
     description,
+    id
+  }
+}
+
+export function unAttachWitness(id) {
+  // Un Assigns witness to an EDF
+  return {
+    type: ActionTypes.UN_ATTACH_WITNESS,
     id
   }
 }

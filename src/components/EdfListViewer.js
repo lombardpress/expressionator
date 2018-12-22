@@ -18,15 +18,19 @@ class EdfListViewer extends Component {
   }
   render() {
     function displayEdfs(props, searchText) {
+
       const displayEdfs = props.edfListInfo.map((edf) => {
+        const authorTitle = props.personsInfo.find((p) => p.id === edf.authorId).title
         if (!searchText
           || edf.title.toLowerCase().includes(searchText.toLowerCase())
-          || edf.authorTitle.toLowerCase().includes(searchText.toLowerCase())
+          || authorTitle.toLowerCase().includes(searchText.toLowerCase())
         ) {
+
           return (
             <EdfListItem
               key={edf.id}
-              authorTitle={edf.authorTitle}
+              authorTitle={authorTitle}
+              authorId={edf.authorId}
               edfId={edf.id}
               edfTitle={edf.title}
               edfStatus={edf.status}

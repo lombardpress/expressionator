@@ -36,6 +36,13 @@ class PersonViewer extends Component {
   }
 
   render() {
+    let title = ""
+    let description = ""
+    const person = this.props.personsInfo.find((p) => p.id === this.props.personInfo.id)
+    if (person){
+      title = person.proposedChange ? person.proposedChange.title : person.title;
+      description = person.proposedChange ? person.proposedChange.description : person.description;
+    }
     return (
       <div>
         <h3>Person Info</h3>
@@ -43,13 +50,13 @@ class PersonViewer extends Component {
           <p>Author ID: {this.props.personInfo.id}</p>
           <p>Author</p>
           <p contentEditable={this.state.editMode} ref="title">
-            {this.props.personInfo.title}
+            {title}
           </p>
         </div>
         <div>
           <p>Description</p>
           <p contentEditable={this.state.editMode} ref="description">
-            {this.props.personInfo.description}</p>
+            {description}</p>
         </div>
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
         <button onClick={this.handleAssignNewPerson}>Assign New Person Entry</button>
