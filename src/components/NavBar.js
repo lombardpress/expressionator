@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
+import { exportToXml } from "../exportToXml";
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.packageData = this.packageData.bind(this);
+    this.downloadTitle = this.downloadTitle.bind(this);
+  }
+
+  packageData(){
+    const data = exportToXml(this.props)
+    const dataLink = "data:application/xml;charset=utf-8," + encodeURI(data)
+    return dataLink
+  }
+  downloadTitle(){
+    const title = this.props.edfInfo.id
+    return title
   }
   render() {
     return (
       <div className="navbar">
-
+        <a href={this.packageData()} download={this.downloadTitle()}>Export Edf v. 0.0.0</a>
       </div>
     );
   }
@@ -23,8 +36,11 @@ class NavBar extends Component {
 const mapStateToProps = state => (
   {
     edfInfo: state.edfInfo,
+    edfListInfo: state.edfListInfo,
     personsInfo: state.personsInfo,
-    view: state.view
+    personInfo: state.personInfo,
+    witnessInfo: state.witnessInfo,
+    witnessesInfo: state.witnessesInfo,
   }
 );
 
