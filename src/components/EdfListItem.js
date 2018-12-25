@@ -57,7 +57,7 @@ class EdfListItem extends Component {
  */
 const mapStateToProps = state => (
   {
-
+    witnessesInfo: state.witnessesInfo,
   }
 );
 

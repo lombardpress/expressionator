@@ -25,7 +25,10 @@ class WitnessesListViewer extends Component {
           //const splitArray = witness.witness.value.split("/resource/")
           //const id = splitArray[splitArray.length - 1]
           return(
-            <WitnessesListItem key={witness.id} witnessId={witness.id} witnessTitle={witness.title} witnessStatus={witness.status} proposedChange={witness.proposedChange}/>
+            <WitnessesListItem
+              key={witness.id}
+              witness={witness}
+              />
           )
         }
       });

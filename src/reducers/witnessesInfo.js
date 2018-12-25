@@ -17,6 +17,7 @@ const witnessesReducer = (state = {}, action) => {
           id: id,
           title: item.witnessTitle.value,
           description: "scta description",
+          manifest: item.manifest.value,
           status: "SCTA"
         }
       });

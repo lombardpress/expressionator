@@ -6,6 +6,7 @@ import personInfo from './personInfo';
 import witnessInfo from './witnessInfo';
 import witnessesInfo from './witnessesInfo';
 import view from './view';
+import manifests from './manifests';
 
 const rootReducer = combineReducers({
   edfInfo: edfInfo,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   personInfo: personInfo,
   witnessInfo: witnessInfo,
   witnessesInfo: witnessesInfo,
-  view: view
+  view: view,
+  manifests: manifests
 });
 
 export default rootReducer;

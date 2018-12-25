@@ -8,15 +8,15 @@ class WitnessesListItem extends Component {
     this.handleWitnessSelect = this.handleWitnessSelect.bind(this);
   }
   handleWitnessSelect() {
-    this.props.attachWitness(this.props.witnessId, this.props.witnessTitle, "description")
+    this.props.attachWitness(this.props.witness.id, this.props.witness.title, this.props.witness.description)
   }
   render() {
-    const displayProposedChange = (witness) => {
-      if (witness.proposedChange){
+    const displayProposedChange = () => {
+      if (this.props.witness.proposedChange){
         return(
           <div className="provisional">Proposed Change:
-            <p>title {this.props.proposedChange.title}</p>
-            <p>description {this.props.proposedChange.description} </p>
+            <p>title {this.props.witness.proposedChange.title}</p>
+            <p>description {this.props.witness.proposedChange.description} </p>
             </div>
         )
       }
@@ -24,8 +24,8 @@ class WitnessesListItem extends Component {
     }
     return (
       <div>
-      <p className={this.props.witnessStatus} onClick={this.handleWitnessSelect} ref="item" value={this.props.witnessId} name={this.props.witnessTitle} key={this.props.witnessId}>{this.props.witnessTitle}</p>
-      {displayProposedChange(this.props)}
+      <p className={this.props.witnessStatus} onClick={this.handleWitnessSelect} ref="item" value={this.props.witness.id} name={this.props.witness.title} key={this.props.witness.id}>{this.props.witness.title}</p>
+      {displayProposedChange()}
       </div>
 
     );
@@ -44,7 +44,8 @@ const mapStateToProps = state => (
     personInfo: state.personInfo,
     witnessInfo: state.witnessInfo,
     witnessesInfo: state.witnessesInfo,
-    view: state.view
+    view: state.view,
+    manifest: state.manifest
   }
 );
 
@@ -56,6 +57,9 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => ({
   attachWitness: (name, description) => (
     dispatch(actions.attachWitness(name, description))
+  ),
+  fetchManifest: (manifest) => (
+    dispatch(actions.fetchManifest(manifest))
   )
 });
 export default connect(

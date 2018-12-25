@@ -13,6 +13,7 @@ import WitnessesView from './WitnessesView.js';
 import PersonViewer from './PersonViewer.js';
 import EdfViewer from './EdfViewer.js';
 import ItemsViewer from './ItemsViewer.js';
+import Manifest from './Manifest';
 
 
 import Axios from "axios";
@@ -44,6 +45,9 @@ class App extends Component {
           </div>
           <div className="column">
             <ItemsViewer />
+          </div>
+          <div className="column">
+            <Manifest />
           </div>
         </div>
       </div>

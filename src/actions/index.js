@@ -65,11 +65,13 @@ export function receiveWitnessesFailure(error) {
 export function fetchWitnesses() {
   const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
   const query = [
-    "SELECT DISTINCT ?witness ?witnessTitle ?witnessShortId ",
+    "SELECT DISTINCT ?witness ?witnessTitle ?witnessShortId ?manifest ",
     "WHERE { ",
     "?witness a <http://scta.info/resource/codex> .",
     // "?witness <http://scta.info/property/shortId> ?witnessShortId .",
     "?witness <http://purl.org/dc/elements/1.1/title> ?witnessTitle .",
+    "?witness <http://scta.info/property/hasCanonicalCodexItem> ?item .",
+    "?item <http://scta.info/property/hasOfficialManifest> ?manifest .",
     "}",
     "ORDER BY ?witnessTitle"].join('');
   return ((dispatch) => {
@@ -78,6 +80,36 @@ export function fetchWitnesses() {
       dispatch(receiveWitnesses(res.data.results.bindings))
     })
       .catch(error => dispatch(receiveWitnessesFailure(error))
+      );
+  });
+}
+
+export function requestManifest() {
+  return {
+    type: ActionTypes.REQUEST_MANIFEST,
+  };
+}
+export function receiveManifest(manifestid, data) {
+  return {
+    type: ActionTypes.RECEIVE_MANIFEST,
+    manifestid: manifestid,
+    manifestdata: data
+  };
+}
+export function receiveManifestFailure(error) {
+  return {
+    type: ActionTypes.RECEIVE_MANIFEST_FAILURE,
+    error
+  };
+}
+export function fetchManifest(manifestid) {
+
+  return ((dispatch) => {
+    dispatch(requestManifest());
+    Axios.get(manifestid).then(function (res) {
+      dispatch(receiveManifest(manifestid, res.data))
+    })
+      .catch(error => dispatch(receiveManifestFailure(error))
       );
   });
 }
