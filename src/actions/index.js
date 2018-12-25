@@ -185,6 +185,7 @@ export function fetchEdfItems(expressionShortId) {
     "WHERE { ",
     "<http://scta.info/resource/" + expressionShortId + "> a <http://scta.info/resource/expression> .",
     "?item <http://scta.info/property/isPartOfTopLevelExpression> <http://scta.info/resource/" + expressionShortId + "> .",
+    "?item <http://scta.info/property/structureType> <http://scta.info/resource/structureItem> .",
     "?item <http://purl.org/dc/elements/1.1/title> ?itemTitle .",
     "?item <http://scta.info/property/shortId> ?itemShortId .",
     "OPTIONAL",
