@@ -13,10 +13,12 @@ class WitnessCreation extends Component {
     e.preventDefault();
     const title = this.refs.form.title.value;
     const description = this.refs.form.description.value;
-    this.props.createAndAttachWitness(title, description);
+    const manifest = this.refs.form.manifest.value;
+    this.props.createAndAttachWitness({title: title, description: description, manifest: manifest});
     //clears form after submission; not sure this is the correct react way to do this.
     this.refs.form.title.value = "";
     this.refs.form.description.value = "";
+    this.refs.form.manifest.value = "";
   }
   render() {
     return (
@@ -32,6 +34,11 @@ class WitnessCreation extends Component {
           <input
             type="text"
             name="description"
+          />
+          <label>Manifest</label>
+          <input
+            type="text"
+            name="manifest"
           />
           <input type="submit" />
         </form>
@@ -60,8 +67,8 @@ const mapStateToProps = state => ({
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-  createAndAttachWitness: (name, description) =>
-    dispatch(actions.createAndAttachWitness(name, description))
+  createAndAttachWitness: (info) =>
+    dispatch(actions.createAndAttachWitness(info))
 
 });
 export default connect(

@@ -51,6 +51,7 @@ class WitnessView extends Component {
         <p ref="id">{this.props.id}</p>
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="description">Description: {this.props.description}</p>
+        <p contentEditable={this.state.editMode} ref="manifest">Manifest: {this.props.manifest}</p>
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
         <button onClick={this.handleRemoveWitness}>Remove</button>
         <button onClick={this.handleFocusWitness}>Focus</button>

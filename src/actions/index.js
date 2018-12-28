@@ -22,13 +22,13 @@ export function receivePersonsFailure(error) {
 }
 export function fetchPersons() {
   const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  // "?resource a <http://scta.info/resource/expression> .",
+  // "?resource <http://scta.info/property/level> '1' .",
+  // "?resource <http://www.loc.gov/loc.terms/relators/AUT> ?person .",
   const query = [
     "SELECT DISTINCT ?person ?personTitle ?personShortId ",
     "WHERE { ",
-    "?author a <http://scta.info/resource/person> .",
-    "?resource a <http://scta.info/resource/expression> .",
-    "?resource <http://scta.info/property/level> '1' .",
-    "?resource <http://www.loc.gov/loc.terms/relators/AUT> ?person .",
+    "?person a <http://scta.info/resource/person> .",
     "?person <http://scta.info/property/shortId> ?personShortId .",
     "?person <http://purl.org/dc/elements/1.1/title> ?personTitle .",
     "}",
@@ -241,7 +241,7 @@ export function fetchEdfManifestations(expressionShortId) {
       dispatch(receiveEdfManifestations(expressionShortId, res.data.results.bindings))
       console.log(res)
       res.data.results.bindings.forEach((item) => {
-        dispatch(attachWitness(item.witnessShortId.value, "title", "description"))
+        dispatch(attachWitness({id: item.witnessShortId.value, title: "title", description: "description"}))
       });
 
     })
@@ -253,7 +253,7 @@ export function fetchEdfManifestations(expressionShortId) {
 export function assignManifestations(edf) {
   return ((dispatch) => {
     edf.manifestations.forEach((m) => {
-      dispatch(attachWitness(m.id, "title", "description"))
+      dispatch(attachWitness({id: m.id, title: "title", description: "description"}))
     })
   });
 }
@@ -277,31 +277,28 @@ export function changeDataCreationView(dataCreationView) {
 }
 
 
-export function createAndAttachWitness(title, description) {
+export function createAndAttachWitness(info) {
   const id = "cod-" + makeid();
+  info["id"] = id
   return ((dispatch) => {
-    dispatch(createWitness(id, title, description))
-    dispatch(attachWitness(id, title, description))
+    dispatch(createWitness(info))
+    dispatch(attachWitness(info))
   });
 }
 
-export function createWitness(id, title, description) {
+export function createWitness(info) {
 
   return {
     type: ActionTypes.CREATE_WITNESS,
-    title,
-    description,
-    id
+    info
   }
 }
 
-export function attachWitness(id, title, description) {
+export function attachWitness(info) {
   // Assigns witness to an EDF
   return {
     type: ActionTypes.ATTACH_WITNESS,
-    title,
-    description,
-    id
+    info
   }
 }
 

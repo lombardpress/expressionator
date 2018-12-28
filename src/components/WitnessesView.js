@@ -13,16 +13,18 @@ class WitnessesView extends Component {
     const displayWitnesses = (witnesses) => {
       const witnessArray = witnesses.map(item => {
         const wit = this.props.witnessesInfo.find((wit) => wit.id === item.id)
+        const manifest = item.proposedChange ? item.proposedChange.manifest : item.manifest;
         if (wit){
           const title = wit.proposedChange ? wit.proposedChange.title : wit.title;
           const description = wit.proposedChange ? wit.proposedChange.description : wit.description;
+
           return (
-            <WitnessView title={title} description={description} id={item.id} key={item.id} />
+            <WitnessView title={title} description={description} id={item.id} key={item.id} manifest={manifest}/>
           )
         }
         else{
           return (
-            <WitnessView title={item.title} description={item.description} id={item.id} key={item.id} />
+            <WitnessView title={item.title} description={item.description} id={item.id} key={item.id} manifest={manifest} />
           )
         }
       })

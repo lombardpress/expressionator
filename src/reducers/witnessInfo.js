@@ -10,11 +10,7 @@ const witnessReducer = (state = [], action) => {
       const currentWitnesses = state.slice();
 
       if (!currentWitnesses.find(wit => wit.id === action.id)){
-        currentWitnesses.push({
-          id: action.id,
-          title: action.title,
-          description: action.description
-        });
+        currentWitnesses.push(action.info);
         return currentWitnesses;
       }
     case ActionTypes.UN_ATTACH_WITNESS:

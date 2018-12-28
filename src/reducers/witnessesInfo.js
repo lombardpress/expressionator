@@ -27,9 +27,7 @@ const witnessesReducer = (state = {}, action) => {
       /// change this to available witness list
       const witnessesList = state.slice();
       witnessesList.push({
-        id: action.id,
-        title: action.title,
-        description: action.description,
+        ...action.info,
         status: "provisional"
       });
       return witnessesList;

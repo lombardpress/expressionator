@@ -20,7 +20,8 @@ class EdfListViewer extends Component {
     function displayEdfs(props, searchText) {
 
       const displayEdfs = props.edfListInfo.map((edf) => {
-        const authorTitle = props.personsInfo.find((p) => p.id === edf.authorId).title
+        const author = props.personsInfo.find((p) => p.id === edf.authorId)
+        const authorTitle = author ? author.title : ""
         if (!searchText
           || edf.title.toLowerCase().includes(searchText.toLowerCase())
           || authorTitle.toLowerCase().includes(searchText.toLowerCase())
