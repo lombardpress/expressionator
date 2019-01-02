@@ -3,7 +3,7 @@ import ActionTypes from '../actions/action-types';
 /**
  * manifestsReducer
  */
-const personsReducer = (state = {}, action) => {
+const personsReducer = (state = [], action) => {
   switch (action.type) {
     case ActionTypes.REQUEST_PERSONS:
       return state

@@ -3,7 +3,7 @@ import ActionTypes from '../actions/action-types';
 /**
  * manifestsReducer
  */
-const edfListReducer = (state = {}, action) => {
+const edfListReducer = (state = [], action) => {
   switch (action.type) {
     case ActionTypes.REQUEST_EDFS:
       return state
