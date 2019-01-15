@@ -31,6 +31,30 @@ export function exportToXml(state) {
   let items = [];
   if (targetEdf.items){
     items = targetEdf.items.map((item) => {
+      let witnessesSurfaces = []
+      if (item.surfaces){
+        const surfaceWitness = item.surfaces.map((s) => {
+          return s.witnessId
+        })
+        const uniqueSurfaceWitness = [...new Set(surfaceWitness)]
+        witnessesSurfaces = uniqueSurfaceWitness.map((w) => {
+          let surfaces = item.surfaces.map((s) => {
+            if (s.witnessId === w){
+              return '           <folio>' + s.surfaceId + '</folio>'
+            }
+          })
+          // needed to clear out undefined values from above map
+          surfaces = surfaces.filter((item) => item != undefined);
+          const witness = [
+            '         <witness ref="#' + w + '">',
+            surfaces.join("\n"),
+            '         </witness>',
+          ].join("\n")
+          return witness
+        })
+
+      }
+
       const title = item.proposedChange ? item.proposedChange.title : item.title;
       const questionTitle = item.proposedChange ? item.proposedChange.questionTitle : item.questionTitle;
       text = [
@@ -38,6 +62,9 @@ export function exportToXml(state) {
       '       <fileName filestem="' + item.id + '"/>',
       '       <title>' + title + '</title>',
       '       <questionTitle>' + questionTitle + '</questionTitle>',
+      '       <hasWitnesses>',
+      witnessesSurfaces.join("\n"),
+      '       </hasWitnesses>',
       '     </item>'
       ].join("\n")
       return text

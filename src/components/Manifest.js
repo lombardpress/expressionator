@@ -11,10 +11,12 @@ class Manifest extends Component {
     function displayCanvases(manifestid, manifests) {
       const manifest = manifests[manifestid];
       if (manifest){
-        const canvases = manifest.sequences[0].canvases.map((canvas) => {
+        const canvases = manifest.sequences[0].canvases.map((canvas, i) => {
+          if (i < 10){
             return (
               <Canvas canvas={canvas}/>
             )
+          }
           });
         return canvases
       }

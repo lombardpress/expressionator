@@ -8,6 +8,7 @@ class Canvas extends Component {
     super(props);
     this.handleOnMouseOver = this.handleOnMouseOver.bind(this)
     this.handleOnMouseOut = this.handleOnMouseOut.bind(this)
+    this.handleItemAssociation = this.handleItemAssociation.bind(this)
     this.state = {
       width: 65
     }
@@ -18,13 +19,36 @@ class Canvas extends Component {
   handleOnMouseOut(){
     this.setState(() => ({width: 65}))
   }
+  handleItemAssociation(){
+    const surfaceId = this.props.canvas["@id"]
+    const witnessId = this.props.view.focusedWitness;
+    const itemId = this.props.view.focusedItem;
+    const edfId = this.props.edfInfo.id;
+
+    this.props.associateSurface(surfaceId, witnessId, itemId, edfId);
+  }
   render() {
+    const displayImage= () => {
+      if (this.props.view.focusedItem){
+        return (<div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut} onClick={this.handleItemAssociation}>
+          <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
+          <br/>
+          <p>{this.props.canvas.label}</p>
+        </div>)
+      }
+      else{
+        return(
+        <div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut}>
+          <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
+          <br/>
+          <p>{this.props.canvas.label}</p>
+        </div>
+      )
+      }
+    }
     return (
-      <div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut}>
-        <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
-        <br/>
-        <p>{this.props.canvas.label}</p>
-      </div>
+      displayImage()
+
     )
   }
 }
@@ -51,7 +75,9 @@ const mapStateToProps = state => (
  * @private
  */
 const mapDispatchToProps = dispatch => ({
-
+  associateSurface: (surfaceId, witnessId, itemId, edfId) => (
+    dispatch(actions.associateSurface(surfaceId, witnessId, itemId, edfId))
+  ),
 });
 export default connect(
   mapStateToProps,

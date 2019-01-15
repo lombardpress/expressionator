@@ -127,6 +127,22 @@ const edfListReducer = (state = [], action) => {
           }
         })
       )
+    case ActionTypes.ASSOCIATE_SURFACE:
+
+    // something not quite right about this need to name vairable and the way the scope of above variable is accessible within this case.
+      const copyState3 = state.slice();
+      const edf3 = copyState3.find((edf) => edf.id === action.edfId);
+      let item3 = edf3.items.find((i) => i.id == action.itemId);
+
+      if (item3.surfaces)
+        item3.surfaces.push({surfaceId: action.surfaceId, itemId: action.itemId, witnessId: action.witnessId})
+      else {
+        item3.surfaces = []
+        item3.surfaces.push({surfaceId: action.surfaceId, itemId: action.itemId, witnessId: action.witnessId})
+      }
+      return [
+        ...copyState3
+      ]
     case ActionTypes.RECEIVE_EDFS_FAILURE:
     default: return state;
   }

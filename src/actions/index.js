@@ -239,7 +239,6 @@ export function fetchEdfManifestations(expressionShortId) {
     dispatch(requestEdfManifestations(expressionShortId));
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
       dispatch(receiveEdfManifestations(expressionShortId, res.data.results.bindings))
-      console.log(res)
       res.data.results.bindings.forEach((item) => {
         dispatch(attachWitness({id: item.witnessShortId.value, title: "title", description: "description"}))
       });
@@ -422,5 +421,22 @@ export function createItem(edfId, info) {
     edfId: edfId,
     id: itemId,
     ...info
+  }
+}
+
+export function changeFocusedItem(id) {
+  return {
+    type: ActionTypes.CHANGE_FOCUSED_ITEM,
+    id: id
+  }
+}
+
+export function associateSurface(surfaceId, witnessId, itemId, edfId){
+  return {
+    type: ActionTypes.ASSOCIATE_SURFACE,
+    surfaceId,
+    witnessId,
+    itemId,
+    edfId
   }
 }

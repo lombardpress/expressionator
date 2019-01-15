@@ -9,6 +9,7 @@ class Item extends Component {
   constructor(props) {
     super(props);
     this.handleToggleEdit = this.handleToggleEdit.bind(this);
+    this.changeFocusedItem = this.changeFocusedItem.bind(this);
     this.state = {
       editMode: false,
     }
@@ -20,8 +21,6 @@ class Item extends Component {
     if (this.state.editMode){
       if (this.props.id){
         this.props.updateItem({edfId: this.props.edfId, id: this.props.id, title: title, questionTitle: questionTitle})
-        console.log("test", title, questionTitle)
-
       }
       else{
         // this would need the edf id
@@ -31,6 +30,15 @@ class Item extends Component {
     }
     this.setState((state) => ({editMode: !state.editMode}))
   }
+  changeFocusedItem(e){
+    e.preventDefault();
+    if (this.props.view.focusedItem === this.props.id){
+      this.props.changeFocusedItem("")
+    }
+    else{
+      this.props.changeFocusedItem(this.props.id)
+    }
+  }
 
   render() {
     return (
@@ -39,6 +47,7 @@ class Item extends Component {
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="questionTitle">{this.props.questionTitle}</p>
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
+        <button onClick={this.changeFocusedItem}>Assign Folios</button>
       </div>
     )
   }
@@ -68,6 +77,9 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => ({
   updateItem: (info) => (
     dispatch(actions.updateItem(info))
+  ),
+  changeFocusedItem: (id) => (
+    dispatch(actions.changeFocusedItem(id))
   ),
 });
 export default connect(

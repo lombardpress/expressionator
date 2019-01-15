@@ -13,6 +13,11 @@ const viewReducer = (state = {}, action) => {
       return Object.assign({}, state, {
         focusedWitness: action.id
       });
+    case ActionTypes.CHANGE_FOCUSED_ITEM:
+      return {
+        ...state,
+        focusedItem: action.id
+      }
     default: return state;
   }
 };
