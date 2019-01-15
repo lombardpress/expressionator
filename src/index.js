@@ -7,9 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import { store, actions } from './store';
 
 //get author list
-//store.dispatch(actions.fetchPersons());
-//store.dispatch(actions.fetchEdfList());
-//store.dispatch(actions.fetchWitnesses());
+store.dispatch(actions.fetchPersons());
+store.dispatch(actions.fetchEdfList());
+store.dispatch(actions.fetchWitnesses());
 
 store.subscribe(() => {
   localStorage.setItem("data-creation-state", JSON.stringify(store.getState()))
