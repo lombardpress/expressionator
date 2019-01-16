@@ -41,11 +41,24 @@ class Item extends Component {
   }
 
   render() {
+
+    const displaySurfaces = () => {
+      // not quite working, only the first span shows up until Assign folios is retoggled and only then do the rest of the folios show up.
+      if (this.props.surfaces){
+        const surfaces = this.props.surfaces.map((s) => {
+          return(
+            <span key={s.surfaceId}>{s.witnessId} : {s.surfaceId}</span>
+          )
+        })
+        return surfaces
+      }
+    }
     return (
       <div className={this.props.status}>
         <p>{this.props.id}</p>
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="questionTitle">{this.props.questionTitle}</p>
+        {displaySurfaces()}
         <button onClick={this.handleToggleEdit}>Toggle Edit</button>
         <button onClick={this.changeFocusedItem}>Assign Folios</button>
       </div>

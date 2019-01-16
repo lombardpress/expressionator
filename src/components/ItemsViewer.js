@@ -13,17 +13,18 @@ class ItemsViewer extends Component {
   render() {
     const displayItems = (targetEdf, edfList) => {
       const edf = edfList.find((edf) => edf.id === targetEdf.id)
-
       let questionTitles = []
       if (edf){
         if (edf.items){
            questionTitles = edf.items.map((item) => {
+             const surfaces = item.surfaces ? item.surfaces : undefined
+             console.log("surfaces from items viewer", surfaces)
              const title = item.proposedChange ? item.proposedChange.title : item.title
              let questionTitle = item.proposedChange ? item.proposedChange.questionTitle : item.questionTitle
              const status = item.proposedChange ? "provisional" : "SCTA"
              const id = item.id;
              return (
-              <Item title={title} questionTitle={questionTitle} edfId={targetEdf.id} id={id} key={id} status={status} />
+              <Item title={title} questionTitle={questionTitle} edfId={targetEdf.id} id={id} key={id} status={status} surfaces={surfaces}/>
             )
           });
         }
