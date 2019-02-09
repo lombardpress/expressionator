@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
+import App2 from './components/App2';
 import './styles/index.css';
-import App from './components/App';
+import './styles/Mosaic.css';
 import * as serviceWorker from './serviceWorker';
 import { store, actions } from './store';
 
@@ -18,9 +20,9 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App2 />
   </Provider>,
-  document.getElementById('root'));
+  document.getElementById('app'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
