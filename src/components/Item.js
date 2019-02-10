@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
-
+import { Button } from "@blueprintjs/core";
 
 
 class Item extends Component {
@@ -59,8 +59,8 @@ class Item extends Component {
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="questionTitle">{this.props.questionTitle}</p>
         {displaySurfaces()}
-        <button onClick={this.handleToggleEdit}>Toggle Edit</button>
-        <button onClick={this.changeFocusedItem}>Assign Folios</button>
+        <Button onClick={this.handleToggleEdit} active={this.state.editMode}>Toggle Edit</Button>
+        <Button onClick={this.changeFocusedItem}>Assign Folios</Button>
       </div>
     )
   }

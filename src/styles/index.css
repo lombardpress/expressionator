@@ -21,13 +21,16 @@ code {
 
 .App-header {
   width: 100%;
-  padding: 10px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
   background-color: gray;
 }
 
 .navbar {
   width: 100%;
-  padding: 10px;
+  height: 20px;
+
   background-color: #59ac7a;
 }
 

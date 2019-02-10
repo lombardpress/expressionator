@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
+import { Button } from "@blueprintjs/core";
+
+// import '@blueprintjs/core/lib/css/blueprint.css';
+// import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+
 
 class PersonViewer extends Component {
   constructor(props) {
@@ -58,8 +63,8 @@ class PersonViewer extends Component {
           <p contentEditable={this.state.editMode} ref="description">
             {description}</p>
         </div>
-        <button onClick={this.handleToggleEdit}>Toggle Edit</button>
-        <button onClick={this.handleAssignNewPerson}>Assign New Person Entry</button>
+        <Button onClick={this.handleToggleEdit} active={this.state.editMode}>Toggle Edit</Button>
+        <Button onClick={this.handleAssignNewPerson}>Assign New Person Entry</Button>
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
+import { Button } from "@blueprintjs/core";
 
 class WitnessView extends Component {
   constructor(props) {
@@ -52,9 +53,9 @@ class WitnessView extends Component {
         <p contentEditable={this.state.editMode} ref="title">{this.props.title}</p>
         <p contentEditable={this.state.editMode} ref="description">Description: {this.props.description}</p>
         <p contentEditable={this.state.editMode} ref="manifest">Manifest: {this.props.manifest}</p>
-        <button onClick={this.handleToggleEdit}>Toggle Edit</button>
-        <button onClick={this.handleRemoveWitness}>Remove</button>
-        <button onClick={this.handleFocusWitness}>Focus</button>
+        <Button onClick={this.handleToggleEdit} active={this.state.editMode}>Toggle Edit</Button>
+        <Button onClick={this.handleRemoveWitness}>Remove</Button>
+        <Button onClick={this.handleFocusWitness}>Focus</Button>
       </div>
     )
   }

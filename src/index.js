@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 
 import App2 from './components/App2';
 import './styles/index.css';
-import './styles/Mosaic.css';
 import * as serviceWorker from './serviceWorker';
 import { store, actions } from './store';
 
@@ -22,7 +21,7 @@ ReactDOM.render(
   <Provider store={store}>
     <App2 />
   </Provider>,
-  document.getElementById('app'));
+  document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

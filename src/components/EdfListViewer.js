@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { actions } from '../store';
 import EdfListItem from './EdfListItem.js';
 
+import { InputGroup } from "@blueprintjs/core";
+
 class EdfListViewer extends Component {
   constructor(props) {
     super(props);
@@ -45,10 +47,14 @@ class EdfListViewer extends Component {
     }
     return (
       <div className="edfsList">
-        <form onChange={this.handleOnChangeSearchText}>
-          <p>Filter Text Expression</p>
-          <input type="text" />
-        </form>
+        <InputGroup
+            disabled={false}
+            large={false}
+            leftIcon="filter"
+            onChange={this.handleOnChangeSearchText}
+            placeholder="Filter Text ..."
+            small={true}
+        />
         {displayEdfs(this.props, this.state.searchText)}
       </div>
     );

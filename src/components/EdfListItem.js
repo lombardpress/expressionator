@@ -7,7 +7,8 @@ class EdfListItem extends Component {
     super(props);
     this.handleEdfSelect = this.handleEdfSelect.bind(this);
   }
-  handleEdfSelect() {
+  handleEdfSelect(e) {
+    e.preventDefault();
     const info = {
       id: this.props.edfId,
       title: this.props.edfTitle,

@@ -1,14 +1,12 @@
 html,
 body,
 #app {
-  height: 100%;
+  height: calc(100% - 40px);
   width: 100%;
   margin: 0;
+  position: fixed;
 }
 
-.mosaic-window-body {
-  overflow: scroll
-}
-.mosaic-window{
-  overflow: scroll
+.mosaic-window-body, .mosaic-window{
+  overflow: scroll!important
 }

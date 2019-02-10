@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { actions } from "../store";
 
+import { Button, FormGroup, InputGroup} from "@blueprintjs/core";
+
 class ItemCreation extends Component {
   constructor(props) {
     super(props);
@@ -28,18 +30,36 @@ class ItemCreation extends Component {
     return (
       <div className="data-creation-form">
         <h3>Add New Item</h3>
-        <form ref="form" onSubmit={this.handleAddNewItem}>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-          />
-          <label>Quesiton Title</label>
-          <input
-            type="text"
-            name="questionTitle"
-          />
-          <input type="submit" />
+        {
+        //<form ref="form" onSubmit={this.handleAddNewItem}>
+
+            // <label>Title</label>
+          // <input
+          //   type="text"
+          //   name="title"
+          // />
+          // <label>Quesiton Title</label>
+          // <input
+          //   type="text"
+          //   name="questionTitle"
+          // />
+          }
+          <form onSubmit={this.handleAddNewItem} ref="form">
+            <FormGroup  label="Title" labelFor="title">
+              <InputGroup
+                  id="title"
+                  placeholder="title"
+              />
+              </FormGroup>
+              <FormGroup  label="Question Title" labelFor="questionTitle">
+                <InputGroup
+                    id="questionTitle"
+                    placeholder="question title"
+                />
+                </FormGroup>
+          <Button type="submit">Submit</Button>
+
+
         </form>
       </div>
     );

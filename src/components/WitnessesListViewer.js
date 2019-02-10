@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { actions } from '../store';
 import WitnessesListItem from './WitnessesListItem.js';
 
+import { InputGroup } from "@blueprintjs/core";
+
 class WitnessesListViewer extends Component {
   constructor(props) {
     super(props);
@@ -36,9 +38,14 @@ class WitnessesListViewer extends Component {
     }
     return (
       <div className="witnessesList">
-        <form onChange={this.handleOnChangeSearchText}>
-          <p>Filter Witnesses</p>
-          <input type="text" /></form>
+          <InputGroup
+              disabled={false}
+              large={false}
+              leftIcon="filter"
+              onChange={this.handleOnChangeSearchText}
+              placeholder="Filter Witnesses ..."
+              small={true}
+          />
         {displayWitnesses(this.props, this.state.searchText)}
       </div>
 

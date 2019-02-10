@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { actions } from "../store";
+import { Button, FormGroup, InputGroup} from "@blueprintjs/core";
 
 class WitnessCreation extends Component {
   constructor(props) {
@@ -24,24 +25,29 @@ class WitnessCreation extends Component {
     return (
       <div className="data-creation-form">
         <h3>Assign New Witness</h3>
-        <form ref="form" onSubmit={this.handleAddNewWitness}>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-          />
-          <label>Description</label>
-          <input
-            type="text"
-            name="description"
-          />
-          <label>Manifest</label>
-          <input
-            type="text"
-            name="manifest"
-          />
-          <input type="submit" />
-        </form>
+        <form onSubmit={this.handleAddNewWitness} ref="form">
+          <FormGroup  label="Title" labelFor="title">
+            <InputGroup
+                id="title"
+                placeholder="title"
+            />
+            </FormGroup>
+            <FormGroup  label="Description" labelFor="description">
+              <InputGroup
+                  id="description"
+                  placeholder="description"
+
+              />
+            </FormGroup>
+            <FormGroup  label="Manifest" labelFor="manifest">
+              <InputGroup
+                  id="manifest"
+                  placeholder="manifest"
+
+              />
+            </FormGroup>
+          <Button type="submit">Submit</Button>
+      </form>
       </div>
     );
   }

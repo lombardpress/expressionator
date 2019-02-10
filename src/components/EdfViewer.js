@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
+import { Button } from "@blueprintjs/core";
+
 
 class EdfViewer extends Component {
   constructor(props) {
@@ -58,8 +60,8 @@ class EdfViewer extends Component {
           <p contentEditable={this.state.editMode} ref="description">
             {description}</p>
         </div>
-        <button onClick={this.handleToggleEdit}>Toggle Edit</button>
-        <button onClick={this.handleCreateNewEdf}>Start New Edf Entry</button>
+        <Button onClick={this.handleToggleEdit} active={this.state.editMode}>Toggle Edit</Button>
+        <Button onClick={this.handleCreateNewEdf}>Start New Edf Entry</Button>
       </div>
     )
   }

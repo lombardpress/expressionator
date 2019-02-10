@@ -51,9 +51,7 @@ class App2 extends Component {
        a: <EdfListViewer/>,
        b: <WitnessesListViewer/>,
        c: <PersonsListViewer/>,
-       d: <EdfViewer/>,
-       e: <PersonViewer/>,
-       f: <WitnessesView />,
+       d: <div><EdfViewer/><PersonViewer/><WitnessesView /></div>,
        g: <ItemsViewer />,
        h: <Manifest />
      }
@@ -68,43 +66,42 @@ class App2 extends Component {
     const initialLayoutValue = {
       direction: 'row',
       first: {
-        direction: 'column',
-        first: {
+        direction: 'row',
+        first: "a",
+        second: {
           direction: 'row',
-            first: 'a',
-            second: 'b',
+            first: 'b',
+            second: 'c',
           },
-          second: {
-            direction: 'row',
-            first: 'c',
-            second: 'd',
-          },
-          splitPercentage: 50
+          splitPercentage: 33
         },
-      second: {
-        direction: 'column',
-        first: {
-          direction: 'row',
-            first: 'e',
-            second: 'f',
-          },
-          second: {
-            direction: 'row',
-            first: 'g',
-            second: 'h',
-          },
-          splitPercentage: 50
+        second: {
+        direction: 'row',
+        first: "d",
+        second: {
+          direction: 'column',
+          first: 'g',
+          second: 'h',
         },
+        splitPercentage: 50
+      },
       splitPercentage: 50,
+      currentTheme: 'mosaic-blueprint-theme'
     }
     return(
-
-        <Mosaic
-          renderTile={this.tileRenderer}
-          initialValue={initialLayoutValue}
-          className="mosaic"
-          zeroStateView={<div />}
-        />
+      <div>
+        <header className="App-header">
+          <p>Data Creation App</p>
+        </header>
+        <NavBar />
+        <div id="app">
+          <Mosaic
+            renderTile={this.tileRenderer}
+            initialValue={initialLayoutValue}
+            zeroStateView={<div />}
+          />
+        </div>
+        </div>
 
     )
   }
