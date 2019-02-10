@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import App2 from './components/App2';
+import App from './components/App';
 import './styles/index.css';
 import * as serviceWorker from './serviceWorker';
 import { store, actions } from './store';
@@ -19,7 +19,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App2 />
+    <App />
   </Provider>,
   document.getElementById('root'));
 
