@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
+import { Button } from "@blueprintjs/core";
 
 class Canvas extends Component {
   constructor(props) {
@@ -9,15 +10,17 @@ class Canvas extends Component {
     this.handleOnMouseOver = this.handleOnMouseOver.bind(this)
     this.handleOnMouseOut = this.handleOnMouseOut.bind(this)
     this.handleItemAssociation = this.handleItemAssociation.bind(this)
+    this.handleNext = this.handleNext.bind(this)
+    this.handlePrevoius = this.handlePrevious.bind(this)
     this.state = {
-      width: 65
+      width: "1000"
     }
   }
   handleOnMouseOver(){
-    this.setState(() => ({width: 300}))
+    this.setState(() => ({width: "1000"}))
   }
   handleOnMouseOut(){
-    this.setState(() => ({width: 65}))
+    this.setState(() => ({width: "1000"}))
   }
   handleItemAssociation(){
     const surfaceId = this.props.canvas["@id"]
@@ -27,28 +30,28 @@ class Canvas extends Component {
 
     this.props.associateSurface(surfaceId, witnessId, itemId, edfId);
   }
+  handleNext(){
+    this.props.selectCanvas(this.props.canvasNext["@id"]);
+  }
+  handlePrevious(){
+    this.props.selectCanvas(this.props.canvasPrevious["@id"]);
+  }
+
   render() {
-    const displayImage= () => {
-      if (this.props.view.focusedItem){
-        return (<div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut} onClick={this.handleItemAssociation}>
-          <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
-          <br/>
-          <p>{this.props.canvas.label}</p>
-        </div>)
+    const displayImage = () => {
+        return (
+          <div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut} >
+            <div>
+              <span>{this.props.canvas.label}</span>
+              {this.props.view.focusedItem && <Button onClick={this.handleItemAssociation}>Add</Button>}
+              {this.props.canvasNext && <Button onClick={this.handleNext}>Next</Button>}
+              {this.props.canvasPrevious && <Button onClick={this.handlePrevious}>Previous</Button>}
+            </div>
+            <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
+          </div>)
       }
-      else{
-        return(
-        <div onMouseOver={this.handleOnMouseOver} onMouseOut={this.handleOnMouseOut}>
-          <img src={this.props.canvas.images[0].resource.service["@id"] + "/full/" + this.state.width + ",/0/default.jpg"}/>
-          <br/>
-          <p>{this.props.canvas.label}</p>
-        </div>
-      )
-      }
-    }
     return (
       displayImage()
-
     )
   }
 }
@@ -78,6 +81,9 @@ const mapDispatchToProps = dispatch => ({
   associateSurface: (surfaceId, witnessId, itemId, edfId) => (
     dispatch(actions.associateSurface(surfaceId, witnessId, itemId, edfId))
   ),
+  selectCanvas: (canvasid) => (
+    dispatch(actions.selectCanvas(canvasid))
+  )
 });
 export default connect(
   mapStateToProps,

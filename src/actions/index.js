@@ -440,3 +440,9 @@ export function associateSurface(surfaceId, witnessId, itemId, edfId){
     edfId
   }
 }
+export function selectCanvas(canvasid){
+  return {
+    type: ActionTypes.SELECT_CANVAS,
+    canvasid
+  }
+}

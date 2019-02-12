@@ -95,3 +95,11 @@ input {
   padding-left: 10px;
   font-size: 12px;
 }
+
+.imageWrapper{
+  width: 100%;
+
+}
+.imageWrapper img{
+  width: 100%
+}

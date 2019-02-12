@@ -8,17 +8,59 @@ class Manifest extends Component {
     super(props);
   }
   render() {
-    function displayCanvases(manifestid, manifests) {
+    function displayCanvases(manifestid, manifests, view) {
       const manifest = manifests[manifestid];
+      const canvasid = view.canvasid
       if (manifest){
-        const canvases = manifest.sequences[0].canvases.map((canvas, i) => {
-          if (i < 10){
-            return (
-              <Canvas canvas={canvas}/>
-            )
+        if (canvasid){
+          const canvas = manifest.sequences[0].canvases.find((canvas) => {
+            if (canvas["@id"] === canvasid){
+              return canvas
+            }
+          })
+          const canvasIndex = manifest.sequences[0].canvases.findIndex((canvas, index) => {
+            if (canvas["@id"] === canvasid){
+              return index
+            }
+          })
+          let canvasNext = ""
+          let canvasPrevious = ""
+
+          if (canvasIndex != manifest.sequences[0].canvases.length - 1){
+            canvasNext = manifest.sequences[0].canvases[canvasIndex + 1]
           }
-          });
-        return canvases
+          else {
+            canvasNext = undefined
+          }
+          if (canvasIndex != 0){
+            canvasPrevious = manifest.sequences[0].canvases[canvasIndex - 1]
+          }
+          else {
+            canvasPrevious = undefined
+          }
+          return <Canvas canvas={canvas} canvasNext={canvasNext} canvasPrevious={canvasPrevious}/>
+        }
+        else {
+          const canvas = manifest.sequences[0].canvases[0]
+          const canvasNext = manifest.sequences[0].canvases[1]
+          const canvasPrevious = undefined
+          return <Canvas canvas={canvas} canvasNext={canvasNext} canvasPrevious={canvasPrevious}/>
+        }
+        // const canvases = manifest.sequences[0].canvases.map((canvas, i) => {
+        //   if (canvase["@id"] === canvasid){
+        //     return (
+        //       <Canvas canvas={canvas}/>
+        //     )
+        //   }
+        //   else if (i === 0) {
+        //     if {
+        //       return (
+        //         <Canvas canvas={canvas}
+        //       )
+        //   }
+        //   });
+        // return canvases
+
       }
       else{
         return null
@@ -39,7 +81,7 @@ class Manifest extends Component {
       }
     }
     return (
-      displayCanvases(getFocusedWitness(this.props.witnessesInfo, this.props.view.focusedWitness), this.props.manifests)
+      displayCanvases(getFocusedWitness(this.props.witnessesInfo, this.props.view.focusedWitness), this.props.manifests, this.props.view)
     );
   }
 }

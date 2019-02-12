@@ -18,6 +18,11 @@ const viewReducer = (state = {}, action) => {
         ...state,
         focusedItem: action.id
       }
+    case ActionTypes.SELECT_CANVAS:
+      return {
+        ...state,
+        canvasid: action.canvasid
+      }
     default: return state;
   }
 };
