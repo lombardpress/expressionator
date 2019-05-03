@@ -99,6 +99,8 @@ const edfListReducer = (state = [], action) => {
         title: action.title,
         authorTitle: "authorTitle",
         description: action.description,
+        items: [],
+        manifestations: [],
         status: "provisional"
       });
       return edfList;
