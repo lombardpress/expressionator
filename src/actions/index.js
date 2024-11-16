@@ -21,7 +21,7 @@ export function receivePersonsFailure(error) {
   };
 }
 export function fetchPersons() {
-  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const sparqlEndpoint = "https://sparql.scta.info/ds/query"
   // "?resource a <http://scta.info/resource/expression> .",
   // "?resource <http://scta.info/property/level> '1' .",
   // "?resource <http://www.loc.gov/loc.terms/relators/AUT> ?person .",
@@ -63,7 +63,7 @@ export function receiveWitnessesFailure(error) {
   };
 }
 export function fetchWitnesses() {
-  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const sparqlEndpoint = "https://sparql.scta.info/ds/query"
   const query = [
     "SELECT DISTINCT ?witness ?witnessTitle ?witnessShortId ?manifest ",
     "WHERE { ",
@@ -133,19 +133,20 @@ export function receiveEdfListFailure(error) {
   };
 }
 export function fetchEdfList() {
-  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const sparqlEndpoint = "https://sparql.scta.info/ds/query"
   const query = [
     "SELECT DISTINCT ?expression ?expressionTitle ?authorTitle ?expressionShortId ?authorShortId ",
     "WHERE { ",
     "?expression a <http://scta.info/resource/expression> .",
     "?expression <http://scta.info/property/level> '1' .",
-    "?expression <http://scta.info/property/shortId> ?expressionShortId .",
+    //"?expression <http://scta.info/property/shortId> ?expressionShortId .",
+    "BIND(STRAFTER(STR(?expression), '/resource/') AS ?expressionShortId) .",
     "?expression <http://www.loc.gov/loc.terms/relators/AUT> ?author .",
     "?author <http://purl.org/dc/elements/1.1/title> ?authorTitle .",
     "?author <http://scta.info/property/shortId> ?authorShortId .",
     "?expression <http://purl.org/dc/elements/1.1/title> ?expressionTitle .",
     "}",
-    "ORDER BY ?expressionTitle"].join('');
+    "ORDER BY ?expressionTitle"].join(' ');
   return ((dispatch) => {
     dispatch(requestEdfList());
     Axios.get(sparqlEndpoint, { params: { "query": query, "output": "json" } }).then(function (res) {
@@ -179,7 +180,7 @@ export function receiveEdfItemsFailure(expressionShortId, error) {
   };
 }
 export function fetchEdfItems(expressionShortId) {
-  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const sparqlEndpoint = "https://sparql.scta.info/ds/query"
   const query = [
     "SELECT DISTINCT ?item ?itemTitle ?questionTitle ?itemShortId ",
     "WHERE { ",
@@ -226,7 +227,7 @@ export function receiveEdfManifestationsFailure(expressionShortId, error) {
   };
 }
 export function fetchEdfManifestations(expressionShortId) {
-  const sparqlEndpoint = "https://sparql-staging.scta.info/ds/query"
+  const sparqlEndpoint = "https://sparql.scta.info/ds/query"
   const query = [
     "SELECT DISTINCT ?manifestationShortId ?witnessShortId ",
     "WHERE { ",
@@ -277,7 +278,7 @@ export function changeDataCreationView(dataCreationView) {
 
 
 export function createAndAttachWitness(info) {
-  const id = "cod-" + makeid();
+  const id = "cod-" + makeid().toLowerCase();
   info["id"] = id
   return ((dispatch) => {
     dispatch(createWitness(info))
@@ -327,7 +328,7 @@ export function changeFocusedWitness(id) {
 
 
 export function createAndAssignEdf(info) {
-  const id = makeid();
+  const id = makeid().toLowerCase();
   info.id = id;
   return ((dispatch) => {
     dispatch(createEdf(info))
@@ -370,8 +371,8 @@ export function clearEdfInfo(info) {
 // person actions
 
 export function createAndAssignPerson(info) {
-  const id = "P" + makeid();
-  info.id = id;
+  const id = "per-" + makeid();
+  info.id = id.toLowerCase;
   return ((dispatch) => {
     dispatch(createPerson(info))
     dispatch(assignPerson(info))
@@ -415,7 +416,7 @@ export function updateItem(info) {
 }
 
 export function createItem(edfId, info) {
-  const itemId = edfId + "-" + makeid();
+  const itemId = edfId + "-" + makeid().toLowerCase();
   return {
     type: ActionTypes.CREATE_ITEM,
     edfId: edfId,
